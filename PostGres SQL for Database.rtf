@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 CREATE TABLE "ReferralSource" (\
+  "ReferralSourceID (PK)" int,\
+  "ReferralSourceType" varchar(21)\
+);\
+\
+CREATE TABLE "Volunteer" (\
+  "volFirstName " varchar(30),\
+  "volLastName" varchar(30),\
+  "volEmail" varchar(40),\
+  "volPhone" varchar(10),\
+  "hoursAvailable" int,\
+  "SewingID" int,\
+  "ReferralSourceID" int,\
+  "VolunteerID (PK)" int\
+);\
+\
+CREATE TABLE "Contact" (\
+  "EventContactID (PK)" int,\
+  "ContactPhone" varchar(10),\
+  "ContactFirstName" varchar(30),\
+  "ContactLastName" varchar(30)\
+);\
+\
+CREATE TABLE "Events" (\
+  "EventID (PK)" int,\
+  "StatusID (FK)" Int,\
+  "EventDate" date,\
+  "EventAddress" varchar(100),\
+  "EventCity" varchar(30),\
+  "EventState" varchar(30),\
+  "StartTime" datetime,\
+  "Duration" varchar(10),\
+  "EventContactID (FK)" int,\
+  "EventType" varchar(15),\
+  "JenStory" boolean,\
+  "Participants" int,\
+  "Pockets" int,\
+  "Vests" int,\
+  "Collars" int,\
+  "Envelopes" int,\
+  CONSTRAINT "FK_Events.EventContactID (FK)"\
+    FOREIGN KEY ("EventContactID (FK)")\
+      REFERENCES "Contact"("EventContactID (PK)")\
+);\
+\
+CREATE TABLE "SewingLevel" (\
+  "SewingID (PK)" int,\
+  "SewingLevel" varchar(12)\
+);\
+\
+CREATE TABLE "VolunteerEvents" (\
+  "EventID (CPK)" int,\
+  "VolunteerID (CPK)" int,\
+  CONSTRAINT "FK_VolunteerEvents.EventID (CPK)"\
+    FOREIGN KEY ("EventID (CPK)")\
+      REFERENCES "Events"("EventID (PK)"),\
+  CONSTRAINT "FK_VolunteerEvents.VolunteerID (CPK)"\
+    FOREIGN KEY ("VolunteerID (CPK)")\
+      REFERENCES "Volunteer"("VolunteerID (PK)")\
+);\
+\
+CREATE TABLE "EventRequests" (\
+  "EventID (PK)" int,\
+  "EventDate" varchar(100),\
+  "EventAddress" varchar(100),\
+  "EventCity" varchar(30),\
+  "EventState" varchar(30),\
+  "StartTime" datetime,\
+  "Duration" varchar(10),\
+  "ContactFirstName" varchar(30),\
+  "ContactLastName" varchar(30),\
+  "EventType" varchar(15),\
+  "JenStory" boolean,\
+  "Participants" int\
+);\
+\
+CREATE TABLE "Status" (\
+  "StatusID (PK)" int,\
+  "EventStatus" varchar(10)\
+);}
