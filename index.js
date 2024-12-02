@@ -24,4 +24,9 @@ const knex = require("knex")({
 
 app.get("/", (req, res) => res.render("index"));
 
+app.get("/reqevents", (req, res) => res.render("reqevents"));
+app.get("/newvolunteer", (req, res) => res.render("newvolunteer"));
+
+app.get("/login", (req, res) => res.render("login"));
+
 app.listen(port, () => console.log("listening"));
