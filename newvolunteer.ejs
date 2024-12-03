@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turtle Shelter Project - Volunteer</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- Header Section with Navigation -->
+    <header>
+      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+      <nav class="right-align">
+        <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">HOME</a>
+        <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
+        <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors">THANK YOU TO OUR SPONSORS</a>
+        <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">ABOUT</a>
+        <a href="https://turtleshelterproject.org/take-action">HOW YOU CAN HELP</a>
+        <a href="/newvolunteer">VOLUNTEER</a>
+      </nav>
+    </header>
+
+    <!-- Main Content for Volunteer Form -->
+    <main>
+      <h1 style="text-align: center;">Add New Volunteer</h1>
+      <form action="/addVolunteer" method="POST">
+          <!-- First Name -->
+          <label for="volFirstName">First Name</label>
+          <input type="text" id="volFirstName" name="volFirstName" required>
+
+          <!-- Last Name -->
+          <label for="volLastName">Last Name</label>
+          <input type="text" id="volLastName" name="volLastName" required>
+
+          <!-- Email -->
+          <label for="volEmail">Email</label>
+          <input type="email" id="volEmail" name="volEmail" required>
+
+          <!-- Phone -->
+          <label for="volPhone">Phone</label>
+          <input type="tel" id="volPhone" name="volPhone" required>
+
+          <!-- Hours Available -->
+          <label for="hoursAvailable">Hours Available</label>
+          <input type="number" id="hoursAvailable" name="hoursAvailable" required>
+
+          <!-- Sewing Level -->
+          <label for="SewingID">Sewing Level:</label>
+          <select id="SewingID" name="SewingID" required>
+            <% sewingLevels.forEach(level => { %>
+              <option value="<%= level.SewingID %>" <%= level.SewingID === sewingLevels.SewingID ? 'selected' : '' %> >
+                <%= level.SewingLevel %>
+              </option>
+            <% }) %>
+          </select><br/><br/>
+
+          <!-- Referral Source -->
+          <label for="ReferralSourceID">Referral Source:</label>
+          <select id="ReferralSourceID" name="ReferralSourceID" required>
+            <% referralSources.forEach(source => { %>
+              <option value="<%= source.ReferralSourceID %>" <%= source.ReferralSourceID === referralSources.ReferralSourceID ? 'selected' : '' %> >
+                <%= source.ReferralSourceType %>
+              </option>
+            <% }) %>
+          </select><br /><br />
+
+          <!-- Submit Button -->
+          <button type="submit">Add Volunteer</button>
+      </form>
+    </main>
+
+    <!-- Footer Section (Optional) -->
+    <footer>
+      <p style="text-align: center; font-size: 14px;">&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
