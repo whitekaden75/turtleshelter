@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Volunteer</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+        <nav class="right-align">
+            <a href="/">HOME</a>
+            <a href="/viewvolunteers">VOLUNTEERS</a>
+        </nav>
+    </header>
+
+    <h1 style="text-align: center;" class="page-title">Edit Volunteer</h1>
+
+    <!-- Form to edit volunteer details -->
+    <div class="middlepage">
+        <form action="/editvolunteer/<%= Volunteer.SewingID %>" method="POST" class="middlepage">
+            <label for="volFirstName">First Name:</label>
+            <input type="text" id="volFirstName" name="volFirstName" value="<%= Volunteer.volFirstName %>" required />
+    
+            <label for="volLastName">Last Name:</label>
+            <input type="text" id="volLastName" name="volLastName" value="<%= Volunteer.volLastName %>" required />
+    
+            <label for="volEmail">Email:</label>
+            <input type="email" id="volEmail" name="volEmail" value="<%= Volunteer.volEmail %>" required />
+    
+            <label for="volPhone">Phone:</label>
+            <input type="text" id="volPhone" name="volPhone" value="<%= Volunteer.volPhone %>" required />
+    
+            <label for="hoursAvailable">Hours Available:</label>
+            <input type="number" id="hoursAvailable" name="hoursAvailable" value="<%= Volunteer.hoursAvailable %>" required />
+    
+            <label for="SewingLevel">Sewing Level:</label>
+            <select id="SewingLevel" name="SewingLevel">
+                <option value="Beginner" <%= Volunteer.SewingLevel === "Beginner" ? "selected" : "" %>>Beginner</option>
+                <option value="Intermediate" <%= Volunteer.SewingLevel === "Intermediate" ? "selected" : "" %>>Intermediate</option>
+                <option value="Expert" <%= Volunteer.SewingLevel === "Expert" ? "selected" : "" %>>Expert</option>
+            </select>
+    
+            <label for="ReferralSourceType">Referral Source:</label>
+            <select id="ReferralSourceType" name="ReferralSourceType" required>
+                <option value="SOCIAL MEDIA" <%= Volunteer.ReferralSourceType === "SOCIAL MEDIA" ? "selected" : "" %>>SOCIAL MEDIA</option>
+                <option value="FRIEND RECOMMENDATION" <%= Volunteer.ReferralSourceType === "FRIEND RECOMMENDATION" ? "selected" : "" %>>FRIEND RECOMMENDATION</option>
+                <option value="LOCAL EVENT" <%= Volunteer.ReferralSourceType === "LOCAL EVENT" ? "selected" : "" %>>LOCAL EVENT</option>
+                <option value="OTHER" <%= Volunteer.ReferralSourceType === "OTHER" ? "selected" : "" %>>OTHER</option>
+            </select>
+    
+            <form action="/editvolunteer/<%= Volunteer.VolunteerID %>" method="POST">
+                <!-- Form fields go here -->
+                <button class="btn" type="submit">Save Changes</button>
+            </form>
+            
+        </form>
+    
+        <!-- Back to volunteers button -->
+        <div style="text-align: right; padding: 10px;">
+            <a href="/viewvolunteers" class="btn">Cancel</a>
+        </div>
+    </div>
+    </body>
+</html>
