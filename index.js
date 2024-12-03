@@ -146,6 +146,58 @@ app.post('/addvolunteer', (req, res) => {
       });
 });
 
+// Event Request routes
+app.get("/eventRequest", (req,res) => {
+  knex("EventType")
+  .select()
+  .then(type => {
+    res.render("eventRequest", {type})
+  });
+});
+
+app.post("/eventRequest", (req, res) => {
+  // Extract data from the form
+  const proposedDate1 = req.body.proposedDate1 || null;
+  const proposedDate2 = req.body.proposedDate2 || null;
+  const proposedDate3 = req.body.proposedDate3 || null;
+  let startTime = req.body.startTime;
+  const duration = parseInt(req.body.duration, 10);
+  const address = req.body.address;
+  const city = req.body.city;
+  const state = req.body.state;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const phoneNumber = req.body.phoneNumber;
+  const eventType = req.body.eventType;
+  const shareStory = req.body.shareStory;
+  const participants = parseInt(req.body.participants, 10);
+
+  // Append ":00" for seconds, if it's missing
+  if (startTime && startTime.length === 5) {
+    startTime += ":00"; // Add seconds
+  }
+  knex("EventRequests")
+  .insert({
+    EventDate1 : proposedDate1,
+    EventDate2 : proposedDate2,
+    EventDate3 : proposedDate3,
+    StartTime : startTime,
+    Duration : duration,
+    EventAddress : address.toUpperCase(),
+    EventCity : city.toUpperCase(),
+    EventState : state.toUpperCase(),
+    ContactFirstName : firstName.toUpperCase(),
+    ContactLastName : lastName.toUpperCase(),
+    ContactPhone : phoneNumber,
+    EventType : eventType,
+    JenStory : shareStory ? "true" : "false",
+    Participants : participants
+  })
+  .then(() => {
+    res.redirect("/")
+  })
+});
+
 app.listen(port, () => console.log("listening"));
 
 //  in terminal need to add npm install express knex pg cors
