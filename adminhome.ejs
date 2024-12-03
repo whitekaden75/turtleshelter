@@ -8,20 +8,20 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let security = `<%= security %>`;
-        let sudoSecurity = `<%=sudoSecurity%>`;
+        let sudoSecurity = `<%= sudoSecurity %>`;
         console.log("normal", security);
         console.log("sudo", sudoSecurity);
 
-        // Check if 'security' is false and apply style change
-        if (security == "false" && sudoSecurity == "false") {
-          console.log("this worked");
-          document.getElementById("badUser").style = "block";
-        } else if (security == "true") {
-          console.log("this didnt work");
-          document.getElementById("normaluser").style = "block";
-        } else if (sudoSecurity == "true") {
-          console.log("thiis 3");
-          document.getElementById("sudouser").style = "block";
+        // Check user access level and display corresponding section
+        if (security === "false" && sudoSecurity === "false") {
+          console.log("Invalid user detected");
+          document.getElementById("badUser").style.display = "block";
+        } else if (security === "true") {
+          console.log("Normal user detected");
+          document.getElementById("normalUser").style.display = "block";
+        } else if (sudoSecurity === "true") {
+          console.log("Sudo user detected");
+          document.getElementById("sudoUser").style.display = "block";
         }
       });
     </script>
@@ -30,50 +30,73 @@
     <header>
       <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
     </header>
-    <!-- invalid user -->
+
+    <!-- Invalid User Section -->
     <div id="badUser" style="display: none">
       <div class="login-container">
         <form action="/login" method="get" class="login-form">
           <h2>Username or Password Incorrect</h2>
-          <button type="submit">Try again</button>
+          <button type="submit" class="btn">Try Again</button>
         </form>
       </div>
     </div>
-    <div id="normaluser" style="display: none">
-      <h1>Hello Admin!</h1>
 
-      <div class="menu">
-        <div>
-          <button onclick="window.location.href='/page1'">Volunteers</button>
+    <!-- Normal User Section -->
+    <div id="normalUser" style="display: none">
+      <main>
+        <h1>Hello Admin!</h1>
+        <div class="menu">
+          <div>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Volunteers
+            </button>
+          </div>
+          <hr />
+          <div>
+            <h2>Events</h2>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Events Statistics
+            </button>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Event Calendar
+            </button>
+          </div>
         </div>
-        <hr />
-        <div>
-          Events
-          <button onclick="window.location.href='/page1'">Events statistics</button>
-          <button onclick="window.location.href='/page1'">Event Calendar</button>
-        </div>
-      </div>
+      </main>
     </div>
-    <div id="sudouser" style="display: none">
-      <h1>Hello sudo Admin!</h1>
 
-      <div class="menu">
-        <div>
-          <button onclick="window.location.href='/page1'">Volunteers</button>
+    <!-- Sudo User Section -->
+    <div id="sudoUser" style="display: none">
+      <main>
+        <h1>Hello Sudo Admin!</h1>
+        <div class="menu">
+          <div>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Volunteers
+            </button>
+          </div>
+          <hr />
+          <div>
+            <h2>Events</h2>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Events Statistics
+            </button>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Event Calendar
+            </button>
+          </div>
+          <hr />
+          <div>
+            <button class="btn" onclick="window.location.href='/page1'">
+              Edit User
+            </button>
+          </div>
         </div>
-        <hr />
-        <div>
-          Events
-          <button onclick="window.location.href='/page1'">Events statistics</button>
-          <button onclick="window.location.href='/page1'">Event Calendar</button>
+      </main>
+    </div>
 
-        </div>
-      </div>
-      <hr>
-      <div>
-        <button onclick="window.location.href='/page1'">Edit User</button>
-      </div>
-    </div>
-    </div>
+    <footer>
+      <p>&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
+    </footer>
   </body>
 </html>
