@@ -33,13 +33,23 @@
     <main>
       <section>
         <h1>Request an Event</h1>
-        <form action="/submitEventRequest" method="POST" class="middlepage">
+        <form action="/eventRequest" method="POST" class="middlepage">
           <h2>Event Request Form</h2>
-        
+
           <!-- Question 1 -->
-          <label for="proposedDates">Proposed Dates:</label>
-          <input type="text" id="proposedDates" name="proposedDates" required />
-        
+          <label for="proposedDate1">Proposed Date 1 (Required):</label>
+          <input type="date" id="proposedDate1" name="proposedDate1" required />
+
+          <br><br>
+
+          <label for="proposedDate2">Proposed Date 2 (Optional):</label>
+          <input type="date" id="proposedDate2" name="proposedDate2" />
+
+          <br><br>
+
+          <label for="proposedDate3">Proposed Date 3 (Optional):</label>
+          <input type="date" id="proposedDate3" name="proposedDate3" />
+
           <!-- Question 2 -->
           <label for="startTime">Start Time:</label>
           <input type="time" id="startTime" name="startTime" required />
@@ -81,10 +91,15 @@
           <!-- Question 10 -->
           <label for="eventType">Event Type:</label>
           <select id="eventType" name="eventType" required>
-            <option value="sewing">Sewing</option>
-            <option value="non-sewing">Non-Sewing</option>
-            <option value="both">Both</option>
+            <% type.forEach(event => { %>
+              <option value="<%= event.EventType %>"  >
+                <%= event.EventType %>
+              </option>
+            <% }); %>
           </select>
+
+          <!-- < event.TypeID === type.TypeID ? 'selected' : '' %> -->
+          
         
           <!-- Question 11 -->
           <div class="checkbox-group">
