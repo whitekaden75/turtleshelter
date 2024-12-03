@@ -146,6 +146,80 @@ app.post('/addvolunteer', (req, res) => {
       });
 });
 
+// Route to view all volunteers
+app.get('/viewvolunteers', (req, res) => {
+  knex('Volunteer')
+    .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
+    .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
+    .select('volFirstName', 'volLastName', 'volEmail', 'volPhone', 'hoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .then(volunteers => {
+      res.render('viewvolunteers', { volunteers });
+    })
+    .catch(error => {
+      console.error('Error fetching volunteers:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Edit route (optional)
+app.get('/editvolunteer/:id', (req, res) => {
+  const sewingID = req.params.id;
+  knex('Volunteer')
+    .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
+    .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
+    .select('volFirstName', 'volLastName', 'volEmail', 'volPhone', 'hoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .where('Volunteer.SewingID', sewingID)
+    .then(Volunteer => {
+      res.render('editvolunteer', { Volunteer: Volunteer[0] });
+    })
+    .catch(error => {
+      console.error('Error fetching volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.post('/editvolunteer/:id', async (req, res) => {
+  try {
+    const id = req.params.id; // Get the VolunteerID from the URL
+    const { volFirstName, volLastName, volEmail, volPhone, hoursAvailable, SewingID, ReferralSourceID } = req.body;
+
+    // Update the volunteer's details in the database using knex
+    await knex('Volunteer')
+      .where('VolunteerID', id) // Ensure you're using the correct primary key
+      .update({
+        volFirstName: volFirstName.toUpperCase(),
+        volLastName: volLastName.toUpperCase(),
+        volEmail,
+        volPhone,
+        hoursAvailable,
+        SewingID,
+        ReferralSourceID,
+      });
+
+    // Redirect to the volunteer list page
+    res.redirect('/viewvolunteers');
+  } catch (err) {
+    console.error('Error updating volunteer:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+// Delete route 
+app.post('/deletevolunteer/:id', (req, res) => {
+  const sewingID = req.params.id;
+  knex('Volunteer')
+    .where('SewingID', sewingID)
+    .del()
+    .then(() => {
+      res.redirect('/viewvolunteers');  // Redirect to the volunteer list after deletion
+    })
+    .catch(error => {
+      console.error('Error deleting volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 // Event Request routes
 app.get("/eventRequest", (req,res) => {
   knex("EventType")
