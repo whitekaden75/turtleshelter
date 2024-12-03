@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Volunteers</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        body {
+          font-family: sans-serif;
+          background-color: #f4f1e9; /* Soft beige background */
+          color: #666666; /* Neutral gray text */
+          margin: 0;
+          padding: 0;
+          line-height: 1.6;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+          font-size: 16px;
+          text-align: left;
+          background-color: #fff;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        th, td {
+          border: 1px solid #ddd;
+          padding: 12px;
+        }
+        th {
+          background-color: #7d9a6d; /* Primary green */
+          color: #ffffff;
+        }
+        tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+        tr:hover {
+          background-color: #f1f1f1;
+        }
+        button {
+          padding: 8px 12px;
+          background-color: #7d9a6d; /* Primary green */
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+        button:hover {
+          background-color: #4a7b9d; /* Accent blue */
+        }
+    
+        h1 {
+          text-align: center;
+          margin-top: 20px;
+          color: #7d9a6d; /* Primary green */
+        }
+      </style>
+</head>
+<body>
+    <!-- Header Section with Navigation -->
+    <header>
+        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+        <nav class="right-align">
+            <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">HOME</a>
+            <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
+            <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors">THANK YOU TO OUR SPONSORS</a>
+            <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">ABOUT</a>
+            <a href="https://turtleshelterproject.org/take-action">HOW YOU CAN HELP</a>
+            <a href="/newvolunteer">VOLUNTEER</a>
+        </nav>
+    </header>
+    
+    <h1 class="page-title">Volunteer List</h1>
+
+    <!-- Table to display volunteer information -->
+    <table class="volunteer-table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Hours Available</th>
+                <th>Sewing Level</th>
+                <th>Referral Source</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through all volunteers and display their information -->
+            <% volunteers.forEach(function(volunteer) { %>
+                <tr>
+                    <td><%= volunteer.volFirstName %></td>
+                    <td><%= volunteer.volLastName %></td>
+                    <td><%= volunteer.volEmail %></td>
+                    <td><%= volunteer.volPhone %></td>
+                    <td><%= volunteer.hoursAvailable %></td>
+                    <td><%= volunteer.SewingLevel %></td>
+                    <td><%= volunteer.ReferralSourceType %></td>
+                    <td>
+                        <!-- Edit Button -->
+                        <a href="/editvolunteer/<%= volunteer.SewingID %>" class="btn">Edit</a>
+                        <!-- Delete Button -->
+                        <form action="/deletevolunteer/<%= volunteer.SewingID %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this volunteer?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
+    <!-- Back to home button -->
+    <a href="/" class="btn" style="padding: 10px;">Back to Home</a>
+
+</body>
+</html>
+
