@@ -32,7 +32,6 @@ app.get("/", (req, res) => res.render("index"));
 
 app.get("/reqevents", (req, res) => res.render("reqevents"));
 
-app.get("/newvolunteer", (req, res) => res.render("newvolunteer"));
 
 app.get("/adminhome", (req, res) => {
   // Ensure the 'security' variable is being passed
