@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let security = `<%= security %>`;
+        let sudoSecurity = `<%=sudoSecurity%>`;
+        console.log("normal", security);
+        console.log("sudo", sudoSecurity);
+
+        // Check if 'security' is false and apply style change
+        if (security == "false" && sudoSecurity == "false") {
+          console.log("this worked");
+          document.getElementById("badUser").style = "block";
+        } else if (security == "true") {
+          console.log("this didnt work");
+          document.getElementById("normaluser").style = "block";
+        } else if (sudoSecurity == "true") {
+          console.log("thiis 3");
+          document.getElementById("sudouser").style = "block";
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+    </header>
+    <!-- invalid user -->
+    <div id="badUser" style="display: none">
+      <div class="login-container">
+        <form action="/login" method="get" class="login-form">
+          <h2>Username or Password Incorrect</h2>
+          <button type="submit">Try again</button>
+        </form>
+      </div>
+    </div>
+    <div id="normaluser" style="display: none">
+      <h1>Hello Admin!</h1>
+
+      <div class="menu">
+        <button onclick="window.location.href='/page1'">Page 1</button>
+        <button onclick="window.location.href='/page2'">Page 2</button>
+        <button onclick="window.location.href='/page3'">Page 3</button>
+        <button onclick="window.location.href='/page4'">Page 4</button>
+      </div>
+    </div>
+    <div id="sudouser" style="display: none">
+      <h1>Hello sudo Admin!</h1>
+
+      <div class="menu">
+        <button onclick="window.location.href='/page1'">Page 1</button>
+        <button onclick="window.location.href='/page2'">Page 2</button>
+        <button onclick="window.location.href='/page3'">Page 3</button>
+        <button onclick="window.location.href='/page4'">Page 4</button>
+      </div>
+    </div>
+  </body>
+</html>
