@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Contacts</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f1e9; /* Soft beige background */
+      color: #666666; /* Neutral gray text */
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 16px;
+      text-align: left;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+    th {
+      background-color: #7d9a6d; /* Primary green */
+      color: #ffffff;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    button {
+      padding: 8px 12px;
+      background-color: #7d9a6d; /* Primary green */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #4a7b9d; /* Accent blue */
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #7d9a6d; /* Primary green */
+    }
+  </style>
+</head>
+<header>
+    <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+
+    <nav class="right-align">
+      <a
+        href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
+        >HOME</a
+      >
+      <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
+      <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
+        >THANK YOU TO OUR SPONSORS</a
+      >
+      <a
+        href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
+        >ABOUT</a
+      >
+      <a href="https://turtleshelterproject.org/take-action"
+        >HOW YOU CAN HELP
+      </a>
+      <a href="/">VOLUNTEER</a>
+    </nav>
+</header>
+<body>
+  <h1>Manage Contacts</h1>
+  
+  <% if (contacts.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Contact Name</th>
+          <th>Phone Number</th>
+          <th>Group Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% contacts.forEach(contact => { %>
+          <tr>
+            <td><%= contact.ContactFirstName %> <%= contact.ContactLastName %></td>
+            <td><%= contact.ContactPhone %></td>
+            <td><%= contact.GroupName %></td>
+            <td>
+              <form action="/addContact" method="POST">
+                <input type="hidden" name="contactID" value="<%= contact.eventContactID %>">
+                <button type="submit">Add</button>
+              </form>
+            </td>
+            <td>
+              <form action="/deleteContact" method="POST">
+                <input type="hidden" name="contactID" value="<%= contact.eventContactID %>">
+                <button type="submit" class="delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No contacts available.</p>
+  <% } %>
+</body>
+</html>
