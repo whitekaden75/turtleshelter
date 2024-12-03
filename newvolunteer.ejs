@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <style>
+      .back-to-home-btn {
+        position: absolute;
+        right: 10px;
+        top: 800px; /* Adjust the top margin as needed */
+        padding: 10px;
+      }
+    </style>
     <!-- Header Section with Navigation -->
     <header>
       <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
@@ -24,51 +32,51 @@
     <main>
       <h1 style="text-align: center;">Add New Volunteer</h1>
       <form action="/addVolunteer" method="POST" class="middlepage">
-          <!-- First Name -->
-          <label for="volFirstName">First Name</label>
-          <input type="text" id="volFirstName" name="volFirstName" required>
+        <!-- First Name -->
+        <label for="volFirstName">First Name</label>
+        <input type="text" id="volFirstName" name="volFirstName" required />
 
-          <!-- Last Name -->
-          <label for="volLastName">Last Name</label>
-          <input type="text" id="volLastName" name="volLastName" required>
+        <!-- Last Name -->
+        <label for="volLastName">Last Name</label>
+        <input type="text" id="volLastName" name="volLastName" required />
 
-          <!-- Email -->
-          <label for="volEmail">Email</label>
-          <input type="email" id="volEmail" name="volEmail" required>
+        <!-- Email -->
+        <label for="volEmail">Email</label>
+        <input type="email" id="volEmail" name="volEmail" required />
 
-          <!-- Phone -->
-          <label for="volPhone">Phone</label>
-          <input type="tel" id="volPhone" name="volPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          placeholder="123-456-7890" required>
+        <!-- Phone -->
+        <label for="volPhone">Phone</label>
+        <input type="tel" id="volPhone" name="volPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          placeholder="123-456-7890" required />
 
-          <!-- Hours Available -->
-          <label for="hoursAvailable">Hours Available</label>
-          <input type="number" id="hoursAvailable" name="hoursAvailable" required>
+        <!-- Hours Available -->
+        <label for="hoursAvailable">Hours Available</label>
+        <input type="number" id="hoursAvailable" name="hoursAvailable" required />
 
-          <!-- Sewing Level -->
-          <label for="SewingID">Sewing Level:</label>
-          <select id="SewingID" name="SewingID" required>
-            <% sewingLevels.forEach(level => { %>
-              <option value="<%= level.SewingID %>" <%= level.SewingID === sewingLevels.SewingID ? 'selected' : '' %> >
-                <%= level.SewingLevel %>
-              </option>
-            <% }) %>
-          </select><br/><br/>
+        <!-- Sewing Level -->
+        <label for="SewingID">Sewing Level:</label>
+        <select id="SewingID" name="SewingID" required>
+          <% sewingLevels.forEach(level => { %>
+            <option value="<%= level.SewingID %>" <%= level.SewingID === sewingLevels.SewingID ? 'selected' : '' %> >
+              <%= level.SewingLevel %>
+            </option>
+          <% }) %>
+        </select><br /><br />
 
-          <!-- Referral Source -->
-          <label for="ReferralSourceID">Referral Source:</label>
-          <select id="ReferralSourceID" name="ReferralSourceID" required>
-            <% referralSources.forEach(source => { %>
-              <option value="<%= source.ReferralSourceID %>" <%= source.ReferralSourceID === referralSources.ReferralSourceID ? 'selected' : '' %> >
-                <%= source.ReferralSourceType %>
-              </option>
-            <% }) %>
-          </select><br /><br />
+        <!-- Referral Source -->
+        <label for="ReferralSourceID">Referral Source:</label>
+        <select id="ReferralSourceID" name="ReferralSourceID" required>
+          <% referralSources.forEach(source => { %>
+            <option value="<%= source.ReferralSourceID %>" <%= source.ReferralSourceID === referralSources.ReferralSourceID ? 'selected' : '' %> >
+              <%= source.ReferralSourceType %>
+            </option>
+          <% }) %>
+        </select><br /><br />
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn">Add Volunteer</button>
-
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Add Volunteer</button>
       </form>
+
       <!-- Alert Script and Redirect -->
       <% if (successMessage) { %>
         <script>
@@ -76,6 +84,11 @@
           window.location.href = "<%= redirectTo %>";
         </script>
       <% } %>
+
+      <!-- Back to Home Button Positioned to the Right -->
+      <div class="back-to-home-btn" style="text-align: right;">
+        <a href="/" class="btn">Back to Home</a>
+      </div>
     </main>
 
     <!-- Footer Section (Optional) -->
@@ -84,5 +97,3 @@
     </footer>
   </body>
 </html>
-
-
