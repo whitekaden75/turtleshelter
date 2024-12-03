@@ -170,3 +170,35 @@ form.middlepage h2 {
   text-align: center; /* Center-align the form heading */
   margin-bottom: 20px; /* Space after the heading */
 }
+
+/* Dropdown specific styles */
+form.middlepage select {
+  font-size: 12px;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Focus effect */
+form.middlepage select:focus {
+  border-color: #030303;
+  background-color: #e9f5ff;
+  outline: none;
+}
+
+/* Style the options inside the dropdown */
+form.middlepage select option {
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+/* Style for hover effect on the select */
+form.middlepage select:hover {
+  border-color: #3f787d;
+  background-color: #f1f1f1;
+}
