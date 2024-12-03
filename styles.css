@@ -102,3 +102,71 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+/* form styles */
+
+form.middlepage {
+  max-width: 600px;
+  margin: 20px auto; /* Center the form on the page with some margin */
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background for the form */
+  border: 1px solid #ccc; /* Subtle border for separation */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+form.middlepage label {
+  display: block; /* Ensure labels are on separate lines */
+  font-weight: bold; /* Make labels stand out */
+  margin-top: 15px; /* Space between inputs and labels */
+  margin-bottom: 5px;
+}
+
+form.middlepage input,
+form.middlepage select {
+  width: 100%; /* Full width for better usability */
+  padding: 8px; /* Comfortable padding inside inputs */
+  margin-bottom: 10px; /* Space between input fields */
+  border: 1px solid #ccc; /* Subtle border for inputs */
+  border-radius: 4px; /* Rounded corners for inputs */
+  box-sizing: border-box; /* Include padding and border in total width */
+}
+
+form.middlepage input[type="checkbox"] {
+  width: auto; /* Don't stretch checkboxes */
+  margin-right: 10px; /* Space before the checkbox label */
+}
+
+form.middlepage .btn {
+  display: block;
+  width: 100%; /* Full-width button */
+  padding: 10px; /* Ample padding for buttons */
+  background-color: #000000; /* Black background to match the header */
+  color: white; /* White text for contrast */
+  text-align: center; /* Center the text */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded button corners */
+  font-size: 16px; /* Slightly larger font for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 20px; /* Space before the button */
+}
+
+form.middlepage .btn:hover {
+  background-color: #333333; /* Darker black shade on hover */
+}
+
+form.middlepage .checkbox-group {
+  display: flex;
+  align-items: center; /* Center checkbox with label */
+  margin-top: 10px; /* Add spacing for checkboxes */
+}
+
+form.middlepage .checkbox-group label {
+  margin: 0; /* Remove margin for checkbox labels */
+  font-weight: normal; /* Match label weight with inputs */
+}
+
+form.middlepage h2 {
+  text-align: center; /* Center-align the form heading */
+  margin-bottom: 20px; /* Space after the heading */
+}
