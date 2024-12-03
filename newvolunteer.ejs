@@ -23,7 +23,7 @@
     <!-- Main Content for Volunteer Form -->
     <main>
       <h1 style="text-align: center;">Add New Volunteer</h1>
-      <form action="/addVolunteer" method="POST">
+      <form action="/addVolunteer" method="POST" class="middlepage">
           <!-- First Name -->
           <label for="volFirstName">First Name</label>
           <input type="text" id="volFirstName" name="volFirstName" required>
@@ -38,7 +38,8 @@
 
           <!-- Phone -->
           <label for="volPhone">Phone</label>
-          <input type="tel" id="volPhone" name="volPhone" required>
+          <input type="tel" id="volPhone" name="volPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          placeholder="123-456-7890" required>
 
           <!-- Hours Available -->
           <label for="hoursAvailable">Hours Available</label>
@@ -65,7 +66,7 @@
           </select><br /><br />
 
           <!-- Submit Button -->
-          <button type="submit">Add Volunteer</button>
+          <button type="submit" class="btn">Add Volunteer</button>
 
       </form>
       <!-- Alert Script and Redirect -->
@@ -83,4 +84,5 @@
     </footer>
   </body>
 </html>
+
 
