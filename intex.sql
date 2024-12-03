@@ -1,3 +1,9 @@
+DO $$ BEGIN
+   CREATE DATABASE intex;
+EXCEPTION WHEN duplicate_database THEN
+   RAISE NOTICE 'Database intex already exists, skipping creation.';
+END $$;
+
 -- Clear existing tables if they exist
 DROP TABLE IF EXISTS public."Admin" CASCADE;
 DROP TABLE IF EXISTS public."Contact" CASCADE;
