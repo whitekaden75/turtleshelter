@@ -94,22 +94,22 @@ app.get('/newvolunteer', (req, res) => {
 // Route to handle adding a new volunteer
 app.post('/addvolunteer', (req, res) => {
   // Extract data from the form
-  const volFirstName = req.body.volFirstName || '';
-  const volLastName = req.body.volLastName || '';
-  const volEmail = req.body.volEmail || '';
-  const volPhone = req.body.volPhone || '';
-  const hoursAvailable = req.body.hoursAvailable;
+  const VolFirstName = req.body.VolFirstName || '';
+  const VolLastName = req.body.VolLastName || '';
+  const VolEmail = req.body.VolEmail || '';
+  const VolPhone = req.body.VolPhone || '';
+  const HoursAvailable = req.body.HoursAvailable;
   const SewingID = parseInt(req.body.SewingID, 10); // Selected sewing level ID
   const ReferralSourceID = parseInt(req.body.ReferralSourceID, 10); // Selected referral source ID
 
   // Insert the new volunteer into the 'volunteers' table
   knex('Volunteer')  
       .insert({
-          volFirstName: volFirstName.toUpperCase(),
-          volLastName: volLastName.toUpperCase(),
-          volEmail: volEmail,
-          volPhone: volPhone,
-          hoursAvailable: hoursAvailable,
+          VolFirstName: VolFirstName.toUpperCase(),
+          VolLastName: VolLastName.toUpperCase(),
+          VolEmail: VolEmail,
+          VolPhone: VolPhone,
+          HoursAvailable: HoursAvailable,
           SewingID: SewingID,  // Store the sewing level ID
           ReferralSourceID: ReferralSourceID // Store the referral source ID
       })
@@ -149,7 +149,7 @@ app.get('/viewvolunteers', (req, res) => {
   knex('Volunteer')
     .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
     .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
-    .select('volFirstName', 'volLastName', 'volEmail', 'volPhone', 'hoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .select('VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
     .then(volunteers => {
       res.render('viewvolunteers', { volunteers });
     })
@@ -161,12 +161,12 @@ app.get('/viewvolunteers', (req, res) => {
 
 // Edit route (optional)
 app.get('/editvolunteer/:id', (req, res) => {
-  const sewingID = req.params.id;
+  const volunteerID = req.params.id;  // Use VolunteerID instead of SewingID
   knex('Volunteer')
     .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
     .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
-    .select('volFirstName', 'volLastName', 'volEmail', 'volPhone', 'hoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
-    .where('Volunteer.SewingID', sewingID)
+    .select('VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.VolunteerID', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .where('Volunteer.VolunteerID', volunteerID)  // Change from SewingID to VolunteerID
     .then(Volunteer => {
       res.render('editvolunteer', { Volunteer: Volunteer[0] });
     })
@@ -179,17 +179,17 @@ app.get('/editvolunteer/:id', (req, res) => {
 app.post('/editvolunteer/:id', async (req, res) => {
   try {
     const id = req.params.id; // Get the VolunteerID from the URL
-    const { volFirstName, volLastName, volEmail, volPhone, hoursAvailable, SewingID, ReferralSourceID } = req.body;
+    const { VolFirstName, VolLastName, VolEmail, VolPhone, HoursAvailable, SewingID, ReferralSourceID } = req.body;
 
     // Update the volunteer's details in the database using knex
     await knex('Volunteer')
       .where('VolunteerID', id) // Ensure you're using the correct primary key
       .update({
-        volFirstName: volFirstName.toUpperCase(),
-        volLastName: volLastName.toUpperCase(),
-        volEmail,
-        volPhone,
-        hoursAvailable,
+        VolFirstName: VolFirstName.toUpperCase(),
+        VolLastName: VolLastName.toUpperCase(),
+        VolEmail,
+        VolPhone,
+        HoursAvailable,
         SewingID,
         ReferralSourceID,
       });
@@ -229,6 +229,127 @@ app.get('/vieweventrequests', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
+
+// Route to show the sign-up page with approved events
+app.get('/signUp', (req, res) => {
+  knex('Events')
+    .join('Status', 'Events.StatusID', '=', 'Status.StatusID')
+    .select()
+    .where('Status.EventStatus', 'APPROVED')
+    .then(events => {
+      res.render('signUp', { events });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Route to handle volunteer sign-ups for a specific event
+app.post('/signUp/:id', (req, res) => {
+  const eventId = req.params.id;
+  
+  knex('Events')
+    .where('EventID', eventId)
+    .select('TmSignedUp', 'TmNeeded')
+    .then(event => {
+      const eventData = event[0];
+
+      // Check if the event has space for more volunteers
+      if (eventData.TmSignedUp < eventData.TmNeeded) {
+        // Update the TmSignedUp field
+        knex('Events')
+          .where('EventID', eventId)
+          .update({
+            TmSignedUp: eventData.TmSignedUp + 1
+          })
+          .then(() => {
+            res.redirect('/signUp');
+          })
+          .catch(error => {
+            console.error('Error signing up for the event:', error);
+            res.status(500).send('Internal Server Error');
+          });
+      } else {
+        res.status(400).send('No available slots for this event.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching event data:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Route to display all events with optional status filtering
+app.get('/viewAllEvents', (req, res) => {
+  const statusFilter = req.query.status || ''; // Default to no filter
+
+  // Build the base query
+  const query = knex('Events')
+    .join('Status', 'Events.StatusID', '=', 'Status.StatusID') // Join with Status table
+    .join('Contact', 'Events.EventContactID', '=', 'Contact.EventContactID') // Join with Contact table
+    .join('EventType', 'Events.TypeID', '=', 'EventType.TypeID') // Join with EventType table
+    .modify((queryBuilder) => {
+      if (statusFilter) {
+        queryBuilder.where('Status.EventStatus', statusFilter); // Filter by EventStatus text
+      }
+    });
+
+  // If "COMPLETED" status is selected, fetch additional columns
+  if (statusFilter === 'COMPLETED') {
+    query.select(
+      'Contact.ContactFirstName',
+      'Contact.ContactLastName',
+      'Contact.ContactPhone',
+      'Contact.GroupName',
+      'Events.EventDate',
+      'Events.EventAddress',
+      'Events.EventCity',
+      'Events.EventState',
+      'Events.StartTime',
+      'Events.Duration',
+      'EventType.EventType',
+      'Events.JenStory',
+      'Events.ExpectedParticipants',
+      'Events.ActualParticipants',
+      'Events.Pockets',
+      'Events.Vests',
+      'Events.Collars',
+      'Events.Envelopes',
+      'Events.TotalProducts',
+      'Events.TmNeeded',
+      'Events.TmSignedUp'
+    );
+  } else {
+    // For non-COMPLETED statuses, only select the basic columns
+    query.select(
+      'Contact.ContactFirstName',
+      'Contact.ContactLastName',
+      'Contact.ContactPhone',
+      'Contact.GroupName',
+      'Events.EventDate',
+      'Events.EventAddress',
+      'Events.EventCity',
+      'Events.EventState',
+      'Events.StartTime',
+      'Events.Duration',
+      'EventType.EventType',
+      'Events.JenStory',
+      'Events.ExpectedParticipants'
+    );
+  }
+
+  // Execute the query
+  query.then(events => {
+    res.render('viewAllEvents', { events, selectedStatus: statusFilter });
+  }).catch(error => {
+    console.error('Error fetching events:', error);
+    res.status(500).send('Internal Server Error');
+  });
+});
+
+
+
 
 // Event Request routes
 app.get("/eventRequest", (req,res) => {
