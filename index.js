@@ -204,7 +204,6 @@ app.post('/editvolunteer/:id', async (req, res) => {
   }
 });
 
-
 // Delete route 
 app.post('/deletevolunteer/:id', (req, res) => {
   const sewingID = req.params.id;
@@ -216,6 +215,19 @@ app.post('/deletevolunteer/:id', (req, res) => {
     })
     .catch(error => {
       console.error('Error deleting volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// View all events route
+app.get('/vieweventrequests', (req, res) => {
+  knex('EventRequests')
+    .select('EventDate', 'EventAddress', 'EventCity', 'EventState', 'StartTime', 'Duration', 'ContactFirstName', 'ContactLastName', 'EventType', 'JenStory', 'Participants')
+    .then(events => {
+      res.render('vieweventrequests', { events });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
       res.status(500).send('Internal Server Error');
     });
 });
