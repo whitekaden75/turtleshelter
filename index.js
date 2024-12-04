@@ -238,19 +238,20 @@ app.post("/rejectRequest/:id", (req,res) => {
   });
 });
 
-// Route to show the sign-up page with approved events
-app.get('/signUp', (req, res) => {
-  knex('Events')
-    .join('Status', 'Events.StatusID', '=', 'Status.StatusID')
+app.get('/reviewRequest/:eventID', (req, res) => {
+  const eventID = req.params.eventID;
+  // Fetch the event details from the database
+  knex("EventRequests")
+  .select()
+  .where("EventID", eventID)
+  .first()
+  .then((request) => {
+    knex("EventType")
     .select()
-    .where('Status.EventStatus', 'APPROVED')
-    .then(events => {
-      res.render('signUp', { events });
-    })
-    .catch(error => {
-      console.error('Error fetching events:', error);
-      res.status(500).send('Internal Server Error');
-    });
+    .then(type => {
+      res.render("reviewRequest", {type, request})
+  });
+  });
 });
 
 app.post('/reviewRequest', (req, res) => {
@@ -306,20 +307,19 @@ app.post('/reviewRequest', (req, res) => {
   });
 });
 
-app.get('/reviewRequest/:eventID', (req, res) => {
-  const eventID = req.params.eventID;
-  // Fetch the event details from the database
-  knex("EventRequests")
-  .select()
-  .where("EventID", eventID)
-  .first()
-  .then((request) => {
-    knex("EventType")
+// Route to show the sign-up page with approved events
+app.get('/signUp', (req, res) => {
+  knex('Events')
+    .join('Status', 'Events.StatusID', '=', 'Status.StatusID')
     .select()
-    .then(type => {
-      res.render("reviewRequest", {type, request})
-  });
-  });
+    .where('Status.EventStatus', 'APPROVED')
+    .then(events => {
+      res.render('signUp', { events });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
 
 // Route to handle volunteer sign-ups for a specific event
