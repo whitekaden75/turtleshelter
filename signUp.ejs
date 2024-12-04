@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Sign-Up</title>
+  <!-- Ensure the correct path to your CSS file -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+    <nav class="right-align">
+      <a href="/">HOME</a>
+      <a href="/viewvolunteers">VOLUNTEERS</a>
+    </nav>
+  </header>
+
+  <h1>Approved Events</h1>
+  
+  <% if (events.length > 0) { %>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Event Date</th>
+          <th>Event Address</th>
+          <th>Event City</th>
+          <th>Event State</th>
+          <th>Start Time</th>
+          <th>Volunteers Needed</th>
+          <th>Volunteers Signed Up</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(event => { %>
+          <tr>
+            <td><%= event.EventDate %></td>
+            <td><%= event.EventAddress %></td>
+            <td><%= event.EventCity %></td>
+            <td><%= event.EventState %></td>
+            <td><%= event.StartTime %></td>
+            <td><%= event.TmNeeded %></td>
+            <td><%= event.TmSignedUp %></td>
+            <td>
+              <% if (event.TmSignedUp < event.TmNeeded) { %>
+                <form action="/signUp/<%= event.EventID %>" method="POST">
+                  <button type="submit">Sign Up</button>
+                </form>
+              <% } else { %>
+                <span>Event Full</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No approved events available at the moment.</p>
+  <% } %>
+</body>
+</html>
+

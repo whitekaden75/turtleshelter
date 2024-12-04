@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View All Events</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file if needed -->
+</head>
+<body>
+
+  <h1>View All Events</h1>
+
+  <!-- Dropdown for status filter -->
+  <form action="/viewAllEvents" method="GET" id="statusForm">
+    <label for="statusFilter">Filter by Status:</label>
+    <select name="status" id="statusFilter" onchange="this.form.submit()">
+      <option value="">All Statuses</option>
+      <option value="APPROVED" <%= selectedStatus === 'APPROVED' ? 'selected' : '' %>>Approved</option>
+      <option value="DECLINED" <%= selectedStatus === 'DECLINED' ? 'selected' : '' %>>Declined</option>
+      <option value="COMPLETED" <%= selectedStatus === 'COMPLETED' ? 'selected' : '' %>>Completed</option>
+    </select>
+  </form>
+
+  <% if (events.length === 0) { %>
+    <p>No events found with the selected status.</p>
+  <% } else { %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Contact</th>
+        <th>Phone</th>
+        <th>Group Name</th>
+        <th>Event Date</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Start Time</th>
+        <th>Duration</th>
+        <th>Event Type</th>
+        <th>Jen Story</th>
+        <th>Expected Participants</th>
+        <% if (selectedStatus === 'COMPLETED') { %>
+          <th>Actual Participants</th>
+          <th>Pockets</th>
+          <th>Vests</th>
+          <th>Collars</th>
+          <th>Envelopes</th>
+          <th>Total Products</th>
+          <th>TM Needed</th>
+          <th>TM Signed Up</th>
+        <% } %>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.forEach(event => { %>
+        <tr>
+          <td><%= event.ContactFirstName %> <%= event.ContactLastName %></td>
+          <td><%= event.ContactPhone %></td>
+          <td><%= event.GroupName %></td>
+          <td><%= event.EventDate %></td>
+          <td><%= event.EventAddress %></td>
+          <td><%= event.EventCity %></td>
+          <td><%= event.EventState %></td>
+          <td><%= event.StartTime %></td>
+          <td><%= event.Duration %></td>
+          <td><%= event.EventType %></td>
+          <td><%= event.JenStory %></td>
+          <td><%= event.ExpectedParticipants %></td>
+          <% if (selectedStatus === 'COMPLETED') { %>
+            <td><%= event.ActualParticipants %></td>
+            <td><%= event.Pockets %></td>
+            <td><%= event.Vests %></td>
+            <td><%= event.Collars %></td>
+            <td><%= event.Envelopes %></td>
+            <td><%= event.TotalProducts %></td>
+            <td><%= event.TmNeeded %></td>
+            <td><%= event.TmSignedUp %></td>
+          <% } %>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <% } %>
+
+  <script>
+    // Automatically submit the form when the status is changed
+    document.getElementById('statusFilter').addEventListener('change', function() {
+      document.getElementById('statusForm').submit();
+    });
+  </script>
+
+</body>
+</html>
