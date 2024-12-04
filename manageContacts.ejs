@@ -58,33 +58,28 @@
       margin-top: 20px;
       color: #7d9a6d; /* Primary green */
     }
+
+    .center-btn {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <header>
-    <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-
-    <nav class="right-align">
-      <a
-        href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-        >HOME</a
-      >
-      <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
-      <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
-        >THANK YOU TO OUR SPONSORS</a
-      >
-      <a
-        href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-        >ABOUT</a
-      >
-      <a href="https://turtleshelterproject.org/take-action"
-        >HOW YOU CAN HELP
-      </a>
-      <a href="/">VOLUNTEER</a>
-    </nav>
+  <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+  <nav class="right-align">
+    <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">HOME</a>
+    <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
+    <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors">THANK YOU TO OUR SPONSORS</a>
+    <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold">ABOUT</a>
+    <a href="https://turtleshelterproject.org/take-action">HOW YOU CAN HELP</a>
+    <a href="/">VOLUNTEER</a>
+  </nav>
 </header>
 <body>
   <h1>Manage Contacts</h1>
-  
+
   <% if (contacts.length > 0) { %>
     <table>
       <thead>
@@ -92,7 +87,6 @@
           <th>Contact Name</th>
           <th>Phone Number</th>
           <th>Group Name</th>
-          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -103,15 +97,9 @@
             <td><%= contact.ContactPhone %></td>
             <td><%= contact.GroupName %></td>
             <td>
-              <form action="/addContact" method="POST">
-                <input type="hidden" name="contactID" value="<%= contact.eventContactID %>">
-                <button type="submit">Add</button>
-              </form>
-            </td>
-            <td>
-              <form action="/deleteContact" method="POST">
-                <input type="hidden" name="contactID" value="<%= contact.eventContactID %>">
-                <button type="submit" class="delete">Delete</button>
+              <form action="/editContact/<%= contact.EventContactID %>" method="get">
+                <input type="hidden" name="contactID" value="<%= contact.EventContactID %>">
+                <button type="submit">Edit Contact</button>
               </form>
             </td>
           </tr>
@@ -121,5 +109,12 @@
   <% } else { %>
     <p>No contacts available.</p>
   <% } %>
+
+  <!-- Add Contact Button -->
+  <div class="center-btn">
+    <form action="/addContact" method="get">
+      <button type="submit">Add Contact</button>
+    </form>
+  </div>
 </body>
 </html>
