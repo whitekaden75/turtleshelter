@@ -272,6 +272,15 @@ app.post("/eventRequest", (req, res) => {
   })
 });
 
+// Manage contact routes
+app.get("/manageContacts", (req, res) => {
+  knex("Contact")
+  .select()
+  .then((contacts) => {
+      res.render("manageContacts", { contacts })
+  });
+});
+
 app.listen(port, () => console.log("listening"));
 
 //  in terminal need to add npm install express knex pg cors
