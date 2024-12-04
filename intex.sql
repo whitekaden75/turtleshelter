@@ -27,6 +27,7 @@ CREATE TABLE public."Contact" (
     "ContactPhone" character varying(10),
     "ContactFirstName" character varying(30),
     "ContactLastName" character varying(30)
+    "ContactEmail
 );
 
 CREATE SEQUENCE public."Contact_EventContactID_seq" START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
@@ -117,7 +118,7 @@ CREATE TABLE public."Volunteer" (
     "VolFirstName" character varying(30),
     "VolLastName" character varying(30),
     "VolEmail" character varying(40),
-    "VolPhone" character varying(10),
+    "VolPhone" character varying(30),
     "HoursAvailable" integer,
     "SewingID" integer,
     "ReferralSourceID" integer
