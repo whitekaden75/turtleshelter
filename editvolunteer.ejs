@@ -28,21 +28,21 @@
 
     <!-- Form to edit volunteer details -->
     <div class="middlepage">
-        <form action="/editvolunteer/<%= Volunteer.SewingID %>" method="POST" class="middlepage">
-            <label for="volFirstName">First Name:</label>
-            <input type="text" id="volFirstName" name="volFirstName" value="<%= Volunteer.volFirstName %>" required />
+        <form action="/editvolunteer/<%= Volunteer.VolunteerID %>" method="POST" class="middlepage">
+            <label for="VolFirstName">First Name:</label>
+            <input type="text" id="VolFirstName" name="VolFirstName" value="<%= Volunteer.VolFirstName %>" required />
     
-            <label for="volLastName">Last Name:</label>
-            <input type="text" id="volLastName" name="volLastName" value="<%= Volunteer.volLastName %>" required />
+            <label for="VolLastName">Last Name:</label>
+            <input type="text" id="VolLastName" name="VolLastName" value="<%= Volunteer.VolLastName %>" required />
     
-            <label for="volEmail">Email:</label>
-            <input type="email" id="volEmail" name="volEmail" value="<%= Volunteer.volEmail %>" required />
+            <label for="VolEmail">Email:</label>
+            <input type="email" id="VolEmail" name="VolEmail" value="<%= Volunteer.VolEmail %>" required />
     
-            <label for="volPhone">Phone:</label>
-            <input type="text" id="volPhone" name="volPhone" value="<%= Volunteer.volPhone %>" required />
+            <label for="VolPhone">Phone:</label>
+            <input type="text" id="VolPhone" name="VolPhone" value="<%= Volunteer.VolPhone %>" required />
     
-            <label for="hoursAvailable">Hours Available:</label>
-            <input type="number" id="hoursAvailable" name="hoursAvailable" value="<%= Volunteer.hoursAvailable %>" required />
+            <label for="HoursAvailable">Hours Available:</label>
+            <input type="number" id="HoursAvailable" name="HoursAvailable" value="<%= Volunteer.HoursAvailable %>" required />
     
             <label for="SewingLevel">Sewing Level:</label>
             <select id="SewingLevel" name="SewingLevel">
