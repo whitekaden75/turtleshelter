@@ -272,7 +272,7 @@ app.post("/eventRequest", (req, res) => {
   })
 });
 
-// Manage contact routes
+// CONTACTS ------------
 app.get("/manageContacts", (req, res) => {
   knex("Contact")
   .select()
@@ -280,6 +280,82 @@ app.get("/manageContacts", (req, res) => {
       res.render("manageContacts", { contacts })
   });
 });
+
+// Edit GET route 
+app.get('/editContact/:id', (req, res) => {
+  const EventContactID = req.params.id;
+  knex('Contact')
+    .select(
+      'EventContactID',
+      'ContactFirstName',
+      'ContactLastName',
+      'ContactPhone',
+      'ContactEmail',
+      'GroupName'
+    )
+    .where('EventContactID', EventContactID)
+    .first()
+    .then(contact => {
+      res.render('editContact', { contact });
+    })
+    .catch(error => {
+      console.error('Error fetching volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Edit POST route
+app.post("/editContact/:id", (req, res) => {
+  const ContactFirstName = req.body.ContactFirstName;
+  const ContactLastName = req.body.ContactLastName;
+  const ContactPhone = req.body.ContactPhone;
+  const ContactEmail = req.body.ContactEmail;
+  const GroupName = req.body.GroupName;
+  const EventContactID = req.params.id; // Get the EventContactID from the URL parameter
+  
+  knex("Contact")
+    .where("EventContactID", EventContactID)  // Specify which contact to update based on EventContactID
+    .update({
+      ContactFirstName: ContactFirstName,
+      ContactLastName: ContactLastName,
+      ContactPhone: ContactPhone,
+      ContactEmail: ContactEmail,
+      GroupName: GroupName
+    })
+    .then(() => {
+      res.redirect("/manageContacts"); // Redirect to the contacts management page after updating
+    })
+    .catch((error) => {
+      console.error('Error updating contact:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Add Contact Get Route
+app.get('/addContact', (req, res) => {
+  res.render('addContact'); // Render the addContact page
+});
+
+app.post('/addContact', (req, res) => {
+  const { ContactFirstName, ContactLastName, ContactPhone, ContactEmail, GroupName } = req.body;
+
+  knex('Contact')
+    .insert({
+      ContactFirstName,
+      ContactLastName,
+      ContactPhone,
+      ContactEmail,
+      GroupName
+    })
+    .then(() => {
+      res.redirect('/manageContacts'); // Redirect to the manage contacts page after adding
+    })
+    .catch((error) => {
+      console.error('Error adding contact:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 
 app.listen(port, () => console.log("listening"));
 
