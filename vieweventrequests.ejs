@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Event Requests</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f1e9; /* Soft beige background */
+            color: #666666; /* Neutral gray text */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+        th {
+            background-color: #7d9a6d; /* Primary green */
+            color: #ffffff;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #7d9a6d; /* Primary green */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #4a7b9d; /* Accent blue */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #7d9a6d; /* Primary green */
+        }
+
+        /* Navigation Styles */
+        nav a {
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            color: #666666;
+        }
+
+        nav a:hover {
+            color: #7d9a6d; /* Green on hover */
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            font-size: 14px;
+            padding: 20px 0;
+            background-color: #f4f1e9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with Navigation -->
+    <header>
+        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+        <nav class="right-align">
+            <a href="/">HOME</a>
+            <a href="/viewevents">EVENTS</a>
+            <a href="/about">ABOUT</a>
+            <a href="/contact">CONTACT</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Event Requests</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Date</th>
+                    <th>Event Address</th>
+                    <th>Event City</th>
+                    <th>Event State</th>
+                    <th>Start Time</th>
+                    <th>Duration</th>
+                    <th>Contact First Name</th>
+                    <th>Contact Last Name</th>
+                    <th>Event Type</th>
+                    <th>Jen's Story</th>
+                    <th>Participants</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% events.forEach(event => { %>
+                    <tr>
+                        <td><%= event.EventDate %></td>
+                        <td><%= event.EventAddress %></td>
+                        <td><%= event.EventCity %></td>
+                        <td><%= event.EventState %></td>
+                        <td><%= event.StartTime %></td>
+                        <td><%= event.Duration %></td>
+                        <td><%= event.ContactFirstName %></td>
+                        <td><%= event.ContactLastName %></td>
+                        <td><%= event.EventType %></td>
+                        <td><%= event.JenStory ? 'Yes' : 'No' %></td>
+                        <td><%= event.Participants %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Footer Section (Optional) -->
+    <footer>
+        <p style="text-align: center; font-size: 14px; background-color: #7d9a6d; padding: 2em 0;">&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+
