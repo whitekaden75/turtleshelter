@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review Event</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f1e9;
+            color: #666666;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .middlepage {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #7d9a6d;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #7d9a6d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #4a7b9d;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <form action="/reviewRequest" method="POST" class="middlepage">
+            <h2>Review Event</h2>
+        
+            <!-- Display Proposed Dates -->
+            <label>Proposed Date 1:</label>
+            <p><%= request.EventDate1 %></p>
+        
+            <label>Proposed Date 2:</label>
+            <p><%= request.EventDate2 %></p>
+        
+            <label>Proposed Date 3:</label>
+            <p><%= request.EventDate3 %></p>
+        
+            <!-- New Field to Select Final Event Date -->
+            <label for="finalEventDate">Select Final Event Date:</label>
+            <input type="date" id="finalEventDate" name="finalEventDate" required />
+        
+            <!-- Start Time and Duration -->
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" value="<%= request.StartTime %>" required />
+        
+            <label for="duration">Duration (hours):</label>
+            <input type="number" id="duration" name="duration" value="<%= request.Duration %>" min="1" required />
+        
+            <!-- Address, City, State -->
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="<%= request.EventAddress %>" required />
+        
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="<%= request.EventCity %>" required />
+        
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" value="<%= request.EventState %>" required />
+        
+            <!-- Contact Information -->
+            <label for="firstName">Preferred Contact First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="<%= request.ContactFirstName %>" required />
+        
+            <label for="lastName">Preferred Contact Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="<%= request.ContactLastName %>" required />
+            
+            <label for="contactEmail">Preferred Contact Email:</label>
+            <input type="text" id="contactEmail" name="contactEmail" value="default email" required />
+        
+            <label for="phoneNumber">Preferred Contact Phone Number:</label>
+            <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                value="<%= request.ContactPhone %>"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                placeholder="123-456-7890"
+                required />
+        
+            <!-- Event Type -->
+            <label for="eventType">Event Type:</label>
+            <select id="eventType" name="eventType" required>
+                <% type.forEach(eventType => { %>
+                    <option value="<%= eventType.EventType %>" <%= request.EventType === eventType.EventType ? 'selected' : '' %>>
+                        <%= eventType.EventType %>
+                    </option>
+                <% }); %>
+            </select>
+        
+            <!-- Share Jen's Story -->
+            <div class="checkbox-group">
+                <input
+                    type="checkbox"
+                    id="shareStory"
+                    name="shareStory"
+                    value="yes"
+                    <%= request.JenStory ? 'checked' : '' %> />
+                <label for="shareStory">Would you like Jen to share her story?</label>
+            </div>
+        
+            <!-- Participants -->
+            <label for="participants">Estimated Number of Participants:</label>
+            <input
+                type="number"
+                id="participants"
+                name="participants"
+                value="<%= request.Participants %>"
+                min="1"
+                required />
+        
+            <!-- New hidden field for StatusID -->
+            <input type="hidden" name="StatusID" value="1" />
+        
+            <!-- New field for Team Members Needed -->
+            <label for="TmNeeded">Team Members Needed:</label>
+            <input
+                type="number"
+                id="TmNeeded"
+                name="TmNeeded"
+                value=""
+                min="1"
+                required />
+        
+            <!-- Submit Button -->
+            <button type="submit">Submit Review</button>
+        </form>
+        
+    </main>
+</body>
+</html>
