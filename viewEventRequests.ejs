@@ -6,7 +6,7 @@
     <title>View Event Requests</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <style>
-
+        /* Existing styles here */
         table {
             width: 100%; /* Make table take up full width of its container */
             max-width: 90%; /* Limit the maximum width to prevent overflow */
@@ -19,7 +19,7 @@
             border-radius: 8px;
             overflow: hidden;
             table-layout: auto; /* Columns adjust based on content */
-                }
+        }
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
@@ -38,8 +38,6 @@
         tr:hover {
             background-color: #f1f1f1;
         }
-
-        /* Adjust table responsiveness on smaller screens */
         @media (max-width: 768px) {
             table {
                 font-size: 14px;
@@ -49,7 +47,6 @@
                 padding: 8px;
             }
         }
-
         body {
             font-family: sans-serif;
             background-color: #f4f1e9; /* Soft beige background */
@@ -58,7 +55,6 @@
             padding: 0;
             line-height: 1.6;
         }
-    
         button {
             padding: 8px 12px;
             background-color: #7d9a6d; /* Primary green */
@@ -71,31 +67,38 @@
         button:hover {
             background-color: #4a7b9d; /* Accent blue */
         }
-
         h1 {
             text-align: center;
             margin-top: 20px;
             color: #7d9a6d; /* Primary green */
         }
-
-        /* Navigation Styles */
         nav a {
             text-decoration: none;
             margin-left: 20px;
             font-size: 16px;
             color: #666666;
         }
-
         nav a:hover {
             color: #7d9a6d; /* Green on hover */
         }
-
-        /* Footer Styling */
         footer {
             text-align: center;
             font-size: 14px;
             padding: 20px 0;
             background-color: #f4f1e9;
+        }
+        .back-home-btn {
+            margin: 10px 20px;
+            padding: 10px 15px;
+            background-color: #4a7b9d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-home-btn:hover {
+            background-color: #7d9a6d;
         }
     </style>
 </head>
@@ -123,7 +126,9 @@
           </a>
           <a href="/">VOLUNTEER</a>
         </nav>
-      </header>
+        
+        
+    </header>
 
     <main>
         <h1>Event Requests</h1>
@@ -140,8 +145,8 @@
                 <th>Contact Name</th>
                 <th>Event Type</th>
                 <th>Jen's Story</th>
-                <th>Participants</th>
-                <th>Actions</th> <!-- New column for buttons -->
+                <th>Expected Participants</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -162,25 +167,26 @@
                   </td>
                   <td><%= event.EventType %></td>
                   <td><%= event.JenStory ? 'Yes' : 'No' %></td>
-                  <td><%= event.Participants %></td>
+                  <td><%= event.ExpectedParticipants %></td>
                   <td>
-                    <!-- Approve and Reject buttons -->
                     <form action="/reviewRequest/<%= event.EventID %>" method="GET" style="display: inline;">
-                      <button type="submit" >Review</button>
+                      <button type="submit">Review</button>
                     </form>
                     <br>
                     <form action="/rejectRequest/<%= event.EventID %>" method="POST" style="display: inline;">
-                      <button type="submit" >Reject</button>
+                      <button type="submit">Reject</button>
                     </form>
                   </td>
                 </tr>
               <% }) %>
             </tbody>
           </table>
-          
+          <br>
+          <!-- Back to Home Button -->
+        <button class="back-home-btn" onclick="location.href='/'">Back to Home</button>
     </main>
 
-    <!-- Footer Section (Optional) -->
+    <!-- Footer Section -->
     <footer>
         <p style="text-align: center; font-size: 14px; background-color: #7d9a6d; padding: 2em 0;">&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
     </footer>
