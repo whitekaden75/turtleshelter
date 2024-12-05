@@ -103,7 +103,7 @@
             <input type="text" id="lastName" name="lastName" value="<%= request.ContactLastName %>" required />
             
             <label for="contactEmail">Preferred Contact Email:</label>
-            <input type="text" id="contactEmail" name="contactEmail" value="default email" required />
+            <input type="text" id="contactEmail" name="contactEmail" value="<%= request.ContactEmail %>" required />
         
             <label for="phoneNumber">Preferred Contact Phone Number:</label>
             <input
@@ -116,10 +116,10 @@
                 required />
         
             <!-- Event Type -->
-            <label for="eventType">Event Type:</label>
-            <select id="eventType" name="eventType" required>
+            <label for="TypeID">Event Type:</label>
+            <select id="TypeID" name="TypeID" required>
                 <% type.forEach(eventType => { %>
-                    <option value="<%= eventType.EventType %>" <%= request.EventType === eventType.EventType ? 'selected' : '' %>>
+                    <option value="<%= eventType.TypeID %>" <%= request.EventType === eventType.EventType ? 'selected' : '' %>>
                         <%= eventType.EventType %>
                     </option>
                 <% }); %>
@@ -147,8 +147,11 @@
                 required />
         
             <!-- New hidden field for StatusID -->
-            <input type="hidden" name="StatusID" value="1" />
-        
+            <input type="hidden" name="StatusID" value="2" />
+
+            <!-- New hidden field for EventID -->
+            <input type="hidden" name="EventID" value=" <%= request.EventID %>" />
+
             <!-- New field for Team Members Needed -->
             <label for="TmNeeded">Team Members Needed:</label>
             <input
@@ -160,7 +163,7 @@
                 required />
         
             <!-- Submit Button -->
-            <button type="submit">Submit Review</button>
+            <button type="submit">Submit</button>
         </form>
         
     </main>
