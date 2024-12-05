@@ -1,144 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Turtle Shelter Project - Event Request Form</title>
-    <link rel="stylesheet" href="/css/styles.css" />
-  </head>
-  <body>
-    <header>
-      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Request Form - Turtle Shelter Project</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-      <nav class="right-align">
-        <a
-          href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-          >HOME</a
-        >
-        <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
-        <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
-          >THANK YOU TO OUR SPONSORS</a
-        >
-        <a
-          href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-          >ABOUT</a
-        >
-        <a href="https://turtleshelterproject.org/take-action"
-          >HOW YOU CAN HELP
-        </a>
-        <a href="/">VOLUNTEER</a>
-      </nav>
-    </header>
+        /* Transparent Navigation Bar */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            height: 50px;
+        }
 
-    <main>
-      <section>
-        <h1>Request an Event</h1>
-        <form action="/eventRequest" method="POST" class="middlepage">
-          <h2>Event Request Form</h2>
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
 
-          <!-- Question 1 -->
-          <label for="proposedDate1">Proposed Date 1 (Required):</label>
-          <input type="date" id="proposedDate1" name="proposedDate1" required />
+        .nav-bar a:hover {
+            color: lightgreen;
+        }
 
-          <br /><br />
+        /* Form Styling */
+        .form-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-          <label for="proposedDate2">Proposed Date 2 (Optional):</label>
-          <input type="date" id="proposedDate2" name="proposedDate2" />
+        .form-container label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-          <br /><br />
+        .form-container .btn {
+            background-color: lightgreen;
+            color: black;
+            border: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-          <label for="proposedDate3">Proposed Date 3 (Optional):</label>
-          <input type="date" id="proposedDate3" name="proposedDate3" />
+        .form-container .btn:hover {
+            background-color: #89e589;
+            transform: scale(1.05);
+        }
 
-          <!-- Question 2 -->
-          <label for="startTime">Start Time:</label>
-          <input type="time" id="startTime" name="startTime" required />
+        /* Footer */
+        footer {
+            background-color: #343a40;
+            color: white;
+        }
 
-          <!-- Question 3 -->
-          <label for="duration">Duration (hours):</label>
-          <input type="number" id="duration" name="duration" min="1" required />
+        footer a {
+            color: lightgray;
+            text-decoration: none;
+        }
 
-          <!-- Question 4 -->
-          <label for="address">Address:</label>
-          <input type="text" id="address" name="address" required />
+        footer a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Transparent Navigation Bar -->
+    <div class="nav-bar">
+        <a href="/">Home</a>
+        <a href="/newvolunteer">Volunteer</a>
+        <a href="/viewvolunteers">View Volunteers</a>
+        <a href="/vieweventrequests">Event Requests</a>
+    </div>
 
-          <!-- Question 5 -->
-          <label for="city">City:</label>
-          <input type="text" id="city" name="city" required />
-
-          <!-- Question 6 -->
-          <label for="state">State:</label>
-          <input type="text" id="state" name="state" required />
-
-          <!-- Question 7 -->
-          <label for="firstName">Preferred Contact First Name:</label>
-          <input type="text" id="firstName" name="firstName" required />
-
-          <!-- Question 8 -->
-          <label for="lastName">Preferred Contact Last Name:</label>
-          <input type="text" id="lastName" name="lastName" required />
-
-          <!-- Question 9 -->
-          <label for="phoneNumber">Preferred Contact Phone Number:</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            placeholder="123-456-7890"
-            required />
-
-          <!-- Question 10 -->
-          <label for="ContactEmail">Preferred Contact Email:</label>
-          <input type="text" id="ContactEmail" name="ContactEmail" required />
-
-          <!-- Question 11 -->
-          <label for="groupName">Group Name:</label>
-          <input type="text" id="groupName" name="groupName" required />
-
-          <!-- Question 12 -->
-          <label for="eventType">Event Type:</label>
-          <select id="eventType" name="eventType" required>
-            <% type.forEach(event => { %>
-            <option value="<%= event.EventType %>">
-              <%= event.EventType %>
-            </option>
-            <% }); %>
-          </select>
-
-          <!-- Question 13 -->
-          <div class="checkbox-group">
-            <input
-              type="checkbox"
-              id="shareStory"
-              name="shareStory"
-              value="yes" />
-            <label for="shareStory"
-              >Would you like Jen to share her story?</label
-            >
-          </div>
-
-          <!-- Question 14 -->
-          <label for="participants">Estimated Number of Participants:</label>
-          <input
-            type="number"
-            id="participants"
-            name="participants"
-            min="1"
-            required />
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn">Submit Event Request</button>
+    <!-- Form Section -->
+    <div class="container form-container">
+        <h2 class="text-center mb-4">Event Request Form</h2>
+        <form action="/eventRequest" method="POST">
+            <div class="mb-3">
+                <label for="proposedDate1">Proposed Date 1 (Required):</label>
+                <input type="date" class="form-control" id="proposedDate1" name="proposedDate1" required>
+            </div>
+            <div class="mb-3">
+                <label for="proposedDate2">Proposed Date 2 (Optional):</label>
+                <input type="date" class="form-control" id="proposedDate2" name="proposedDate2">
+            </div>
+            <div class="mb-3">
+                <label for="proposedDate3">Proposed Date 3 (Optional):</label>
+                <input type="date" class="form-control" id="proposedDate3" name="proposedDate3">
+            </div>
+            <div class="mb-3">
+                <label for="startTime">Start Time:</label>
+                <input type="time" class="form-control" id="startTime" name="startTime" required>
+            </div>
+            <div class="mb-3">
+                <label for="duration">Duration (hours):</label>
+                <input type="number" class="form-control" id="duration" name="duration" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <div class="mb-3">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="mb-3">
+                <label for="state">State:</label>
+                <input type="text" class="form-control" id="state" name="state" required>
+            </div>
+            <div class="mb-3">
+                <label for="firstName">Preferred Contact First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="mb-3">
+                <label for="lastName">Preferred Contact Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNumber">Preferred Contact Phone Number:</label>
+                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required>
+            </div>
+            <div class="mb-3">
+                <label for="ContactEmail">Preferred Contact Email:</label>
+                <input type="email" class="form-control" id="ContactEmail" name="ContactEmail" required>
+            </div>
+            <div class="mb-3">
+                <label for="groupName">Group Name:</label>
+                <input type="text" class="form-control" id="groupName" name="groupName" required>
+            </div>
+            <div class="mb-3">
+                <label for="eventType">Event Type:</label>
+                <select id="eventType" name="eventType" class="form-select" required>
+                    <% type.forEach(event => { %>
+                        <option value="<%= event.EventType %>"><%= event.EventType %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="shareStory" name="shareStory" value="yes">
+                <label class="form-check-label" for="shareStory">Would you like Jen to share her story?</label>
+            </div>
+            <div class="mb-3">
+                <label for="participants">Estimated Number of Participants:</label>
+                <input type="number" class="form-control" id="participants" name="participants" min="1" required>
+            </div>
+            <button type="submit" class="btn">Submit Event Request</button>
         </form>
-      </section>
-    </main>
+    </div>
 
-    <footer>
-      <p>&copy; 2024 Turtle Shelter Project. All Rights Reserved.</p>
-      <p>
-        <a href="/privacy">Privacy Policy</a> |
-        <a href="/terms">Terms of Service</a>
-      </p>
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white text-center">
+        <div class="container">
+            <p>&copy; 2024 Turtle Shelter Project. All Rights Reserved.</p>
+        </div>
     </footer>
-  </body>
+</body>
 </html>
