@@ -82,9 +82,11 @@
             <td><%= event.TmSignedUp %></td>
           <% } %>
           <td>
-            <!-- Edit link with EventID included -->
-            <a href="/editEvent/<%= event.EventID %>" class="btn">Edit</a>
-        </td>
+            <form action="/editEvent/<%= event.EventID %>" method="GET" style="display: inline;">
+              <button type="submit" class="btn">Edit</button>
+            </form>
+          </td>
+          
           
         </tr>
       <% }); %>
