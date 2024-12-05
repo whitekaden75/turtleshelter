@@ -22,7 +22,7 @@ const knex = require("knex")({
   connection: {
     host: "localhost",
     user: "postgres",
-    password: "Suicidecraddle",
+    password: "!4SDpadres",
     database: "intex",
     port: 5432,
   },
@@ -446,30 +446,36 @@ app.get('/viewAllEvents', (req, res) => {
 // edit Event route GET
 app.get('/editEvent/:id', (req, res) => {
   const eventID = req.params.id; // Use EventID from the URL
-  knex('Events')
+
+  // Fetch the event and statuses
+  Promise.all([
+    knex('Events')
       .join('Contact', 'Contact.EventContactID', '=', 'Events.EventContactID')
       .join('EventType', 'EventType.TypeID', '=', 'Events.TypeID')
       .join('Status', 'Status.StatusID', '=', 'Events.StatusID')
       .select()
-      .where('Events.EventID', eventID) // Filter by EventID
-      .then(event => {
-          if (event.length > 0) {
-              res.render('editEvent', { event: event[0] }); // Pass the first event to the template
-          } else {
-              res.status(404).send('Event not found');
-          }
-      })
-      .catch(error => {
-          console.error('Error fetching event:', error);
-          res.status(500).send('Internal Server Error');
-      });
+      .where('Events.EventID', eventID)
+      .first(), // Get a single event
+    knex('Status').select('StatusID', 'EventStatus') // Fetch all statuses
+  ])
+    .then(([event, statuses]) => {
+      if (event) {
+        res.render('editEvent', { event, statuses });
+      } else {
+        res.status(404).send('Event not found');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching event or statuses:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
 
-
-// editEvent route POST
+// Edit event route POST
 app.post('/editEvent/:id', async (req, res) => {
+  const eventID = req.params.id; // EventID from the URL
   try {
-    const eventID = req.params.id; // Use EventID from the URL
+    // Extract only the fields from the form
     const {
       EventDate,
       EventAddress,
@@ -487,12 +493,10 @@ app.post('/editEvent/:id', async (req, res) => {
       TotalProducts,
       TmNeeded,
       TmSignedUp,
-      StatusID,
-      TypeID,
-      EventContactID
+      EventStatus, // StatusID
     } = req.body;
 
-    // Update the event details in the database using knex
+    // Update the Events table
     await knex('Events')
       .where('EventID', eventID)
       .update({
@@ -512,9 +516,7 @@ app.post('/editEvent/:id', async (req, res) => {
         TotalProducts,
         TmNeeded,
         TmSignedUp,
-        StatusID,
-        TypeID,
-        EventContactID,
+        StatusID: EventStatus, // Map EventStatus to StatusID column
       });
 
     // Redirect to the events list page
@@ -524,7 +526,6 @@ app.post('/editEvent/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 // Event Request routes
 
