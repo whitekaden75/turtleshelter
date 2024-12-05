@@ -40,6 +40,7 @@
         <th>Event Type</th>
         <th>Jen Story</th>
         <th>Expected Participants</th>
+        <th>Status</th>
         <% if (selectedStatus === 'COMPLETED') { %>
           <th>Actual Participants</th>
           <th>Pockets</th>
@@ -49,12 +50,14 @@
           <th>Total Products</th>
           <th>TM Needed</th>
           <th>TM Signed Up</th>
+          
         <% } %>
       </tr>
     </thead>
     <tbody>
       <% events.forEach(event => { %>
         <tr>
+          
           <td><%= event.ContactFirstName %> <%= event.ContactLastName %></td>
           <td><%= event.ContactPhone %></td>
           <td><%= event.GroupName %></td>
@@ -67,6 +70,7 @@
           <td><%= event.EventType %></td>
           <td><%= event.JenStory %></td>
           <td><%= event.ExpectedParticipants %></td>
+          <td><%= event.EventStatus %></td>
           <% if (selectedStatus === 'COMPLETED') { %>
             <td><%= event.ActualParticipants %></td>
             <td><%= event.Pockets %></td>
@@ -77,6 +81,11 @@
             <td><%= event.TmNeeded %></td>
             <td><%= event.TmSignedUp %></td>
           <% } %>
+          <td>
+            <!-- Edit link with EventID included -->
+            <a href="/editEvent/<%= event.EventID %>" class="btn">Edit</a>
+        </td>
+          
         </tr>
       <% }); %>
     </tbody>
