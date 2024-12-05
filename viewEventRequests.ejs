@@ -1,195 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>View Event Requests</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <style>
-
+      /* Existing styles here */
+      table {
+        width: 100%; /* Make table take up full width of its container */
+        max-width: 90%; /* Limit the maximum width to prevent overflow */
+        margin: 0 auto; /* Center the table horizontally */
+        border-collapse: collapse;
+        font-size: 16px;
+        text-align: left;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        table-layout: auto; /* Columns adjust based on content */
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+        word-wrap: break-word; /* Wrap long text */
+        white-space: normal;
+      }
+      th {
+        background-color: #7d9a6d;
+        color: #ffffff;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+      @media (max-width: 768px) {
         table {
-            width: 100%; /* Make table take up full width of its container */
-            max-width: 90%; /* Limit the maximum width to prevent overflow */
-            margin: 0 auto; /* Center the table horizontally */
-            border-collapse: collapse;
-            font-size: 16px;
-            text-align: left;
-            background-color: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            table-layout: auto; /* Columns adjust based on content */
-                }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-            vertical-align: top;
-            word-wrap: break-word; /* Wrap long text */
-            white-space: normal;
+          font-size: 14px;
+          max-width: 100%; /* Allow full-width on smaller screens */
         }
-        th {
-            background-color: #7d9a6d;
-            color: #ffffff;
+        th,
+        td {
+          padding: 8px;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Adjust table responsiveness on smaller screens */
-        @media (max-width: 768px) {
-            table {
-                font-size: 14px;
-                max-width: 100%; /* Allow full-width on smaller screens */
-            }
-            th, td {
-                padding: 8px;
-            }
-        }
-
-        body {
-            font-family: sans-serif;
-            background-color: #f4f1e9; /* Soft beige background */
-            color: #666666; /* Neutral gray text */
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-    
-        button {
-            padding: 8px 12px;
-            background-color: #7d9a6d; /* Primary green */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        button:hover {
-            background-color: #4a7b9d; /* Accent blue */
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #7d9a6d; /* Primary green */
-        }
-
-        /* Navigation Styles */
-        nav a {
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 16px;
-            color: #666666;
-        }
-
-        nav a:hover {
-            color: #7d9a6d; /* Green on hover */
-        }
-
-        /* Footer Styling */
-        footer {
-            text-align: center;
-            font-size: 14px;
-            padding: 20px 0;
-            background-color: #f4f1e9;
-        }
+      }
+      body {
+        font-family: sans-serif;
+        background-color: #f4f1e9; /* Soft beige background */
+        color: #666666; /* Neutral gray text */
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+      button {
+        padding: 8px 12px;
+        background-color: #7d9a6d; /* Primary green */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #4a7b9d; /* Accent blue */
+      }
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #7d9a6d; /* Primary green */
+      }
+      nav a {
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 16px;
+        color: #666666;
+      }
+      nav a:hover {
+        color: #7d9a6d; /* Green on hover */
+      }
+      footer {
+        text-align: center;
+        font-size: 14px;
+        padding: 20px 0;
+        background-color: #f4f1e9;
+      }
+      .back-home-btn {
+        margin: 10px 20px;
+        padding: 10px 15px;
+        background-color: #4a7b9d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .back-home-btn:hover {
+        background-color: #7d9a6d;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Header Section with Navigation -->
     <header>
-        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-  
-        <nav class="right-align">
-          <a
-            href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-            >HOME</a
-          >
-          <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
-          <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
-            >THANK YOU TO OUR SPONSORS</a
-          >
-          <a
-            href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-            >ABOUT</a
-          >
-          <a href="https://turtleshelterproject.org/take-action"
-            >HOW YOU CAN HELP
-          </a>
-          <a href="/">VOLUNTEER</a>
-        </nav>
-      </header>
+      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+
+      <nav class="right-align">
+        <a
+          href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
+          >HOME</a
+        >
+        <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
+        <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
+          >THANK YOU TO OUR SPONSORS</a
+        >
+        <a
+          href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
+          >ABOUT</a
+        >
+        <a href="https://turtleshelterproject.org/take-action"
+          >HOW YOU CAN HELP
+        </a>
+        <a href="/">VOLUNTEER</a>
+      </nav>
+    </header>
 
     <main>
-        <h1>Event Requests</h1>
+      <h1>Event Requests</h1>
 
-        <table>
-            <thead>
-              <tr>
-                <th>Proposed Dates</th>
-                <th>Event Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Start Time</th>
-                <th>Duration</th>
-                <th>Contact Name</th>
-                <th>Event Type</th>
-                <th>Jen's Story</th>
-                <th>Participants</th>
-                <th>Status</th>
-                <th>Actions</th> <!-- New column for buttons -->
-              </tr>
-            </thead>
-            <tbody>
-              <% events.forEach(event => { %>
-                <tr>
-                  <td>
-                    <strong>Date 1:</strong> <%= event.EventDate1 %><br>
-                    <strong>Date 2:</strong> <%= event.EventDate2 %><br>
-                    <strong>Date 3:</strong> <%= event.EventDate3 %><br>
-                  </td>
-                  <td><%= event.EventAddress %></td>
-                  <td><%= event.EventCity %></td>
-                  <td><%= event.EventState %></td>
-                  <td><%= event.StartTime %></td>
-                  <td><%= event.Duration %></td>
-                  <td>
-                    <%= event.ContactFirstName %> <%= event.ContactLastName %>
-                  </td>
-                  <td><%= event.EventType %></td>
-                  <td><%= event.JenStory ? 'Yes' : 'No' %></td>
-                  <td><%= event.Participants %></td>
-                  <td>Pending</td>
-                  <td>
-                    <!-- Approve and Reject buttons -->
-                    <form action="/reviewRequest/<%= event.EventID %>" method="GET" style="display: inline;">
-                      <button type="submit" >Review</button>
-                    </form>
-                    <br>
-                    <form action="/rejectRequest/<%= event.EventID %>" method="POST" style="display: inline;">
-                      <button type="submit" >Reject</button>
-                    </form>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
-    <!-- Back to Home Button Positioned to the Right -->
-     <div class="back-to-home-btn" style="text-align: right;">
-      <a href="/" class="btn">Back to Home</a>
-    </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Proposed Dates</th>
+            <th>Event Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Start Time</th>
+            <th>Duration</th>
+            <th>Contact Name</th>
+            <th>Event Type</th>
+            <th>Jen's Story</th>
+            <th>Expected Participants</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% events.forEach(event => { %>
+          <tr>
+            <td>
+              <strong>Date 1:</strong> <%= event.EventDate1 %><br />
+              <strong>Date 2:</strong> <%= event.EventDate2 %><br />
+              <strong>Date 3:</strong> <%= event.EventDate3 %><br />
+            </td>
+            <td><%= event.EventAddress %></td>
+            <td><%= event.EventCity %></td>
+            <td><%= event.EventState %></td>
+            <td><%= event.StartTime %></td>
+            <td><%= event.Duration %></td>
+            <td><%= event.ContactFirstName %> <%= event.ContactLastName %></td>
+            <td><%= event.EventType %></td>
+            <td><%= event.JenStory ? 'Yes' : 'No' %></td>
+            <td><%= event.ExpectedParticipants %></td>
+            <td>
+              <form
+                action="/reviewRequest/<%= event.EventID %>"
+                method="GET"
+                style="display: inline">
+                <button type="submit">Review</button>
+              </form>
+              <br />
+              <form
+                action="/rejectRequest/<%= event.EventID %>"
+                method="POST"
+                style="display: inline">
+                <button type="submit">Reject</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <br />
+      <!-- Back to Home Button -->
+      <button class="back-home-btn" onclick="location.href='/'">
+        Back to Home
+      </button>
     </main>
- 
-    <!-- Footer Section (Optional) -->
+
+    <!-- Footer Section -->
     <footer>
-        <p style="text-align: center; font-size: 14px; background-color: #7d9a6d; padding: 2em 0;">&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
+      <p
+        style="
+          text-align: center;
+          font-size: 14px;
+          background-color: #7d9a6d;
+          padding: 2em 0;
+        ">
+        &copy; 2024 Turtle Shelter Project. All rights reserved.
+      </p>
     </footer>
-
-</body>
+  </body>
 </html>
-
