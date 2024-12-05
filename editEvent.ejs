@@ -53,9 +53,39 @@
             <label for="ExpectedParticipants">Expected Participants:</label>
             <input type="number" name="ExpectedParticipants" value="<%= event.ExpectedParticipants %>" required><br>
             
-            <label for="TmNeeded">Team Needed:</label>
+            <label for="TmNeeded">Team Members Needed:</label>
             <input type="number" name="TmNeeded" value="<%= event.TmNeeded %>" required><br>
             
+            <label for="ActualParticipants">Actual Participants:</label>
+            <input type="number" name="ActualParticipants" value="<%= event.ActualParticipants %>" required><br>
+
+            <label for="Pockets">Pockets:</label>
+            <input type="number" name="Pockets" value="<%= event.Pockets %>" required><br>
+
+            <label for="Vests">Vests:</label>
+            <input type="number" name="Vests" value="<%= event.Vests %>" required><br>
+
+            <label for="Collars">Collars:</label>
+            <input type="number" name="Collars" value="<%= event.Collars %>" required><br>
+
+            <label for="Envelopes">Envelopes:</label>
+            <input type="number" name="Envelopes" value="<%= event.Envelopes %>" required><br>
+
+            <label for="TotalProducts">Total Products:</label>
+            <input type="number" name="TotalProducts" value="<%= event.TotalProducts %>" required><br>
+
+            <label for="TmSignedUp">Team Members Signed Up:</label>
+            <input type="number" name="TmSignedUp" value="<%= event.TmSignedUp %>" required><br>
+
+            <label for="EventStatus">Event Status:</label>
+            <select id="EventStatus" name="EventStatus" required>
+            <% statuses.forEach(status => { %>
+                <option value="<%= status.StatusID %>" 
+                <%= event.StatusID === status.StatusID ? 'selected' : '' %>>
+                <%= status.EventStatus %>
+                </option>
+            <% }); %>
+            </select>
             <!-- Add additional fields if necessary -->
             
             <button type="submit">Save Changes</button>
@@ -69,4 +99,3 @@
     </div>
 </body>
 </html>
-
