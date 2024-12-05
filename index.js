@@ -257,53 +257,62 @@ app.get('/reviewRequest/:eventID', (req, res) => {
 app.post('/reviewRequest', (req, res) => {
   const {
     finalEventDate, startTime, duration, address, city, state,
-    firstName, lastName, phoneNumber, eventType, shareStory, participants, TmNeeded, contactEmail, StatusID
+    firstName, lastName, phoneNumber, TypeID, shareStory, participants, TmNeeded, contactEmail, StatusID
   } = req.body;
+  const EventID = parseInt(req.body.EventID, 10);
 
-  // Start a transaction
-  knex.transaction((trx) => {
-    trx('Contact')
-      .insert({
-        ContactFirstName: firstName,
-        ContactLastName: lastName,
-        ContactPhone: phoneNumber,
-        ContactEmail: contactEmail
-      })
-      .returning('EventContactID')  // Get the Contact ID
-      .then(([contact]) => {
-        if (!contact || !contact.EventContactID) {
-          throw new Error('Error retrieving EventContactID');
-        }
+// Start a transaction
+knex.transaction((trx) => {
+  trx('Contact')
+    .insert({
+      ContactFirstName: firstName,
+      ContactLastName: lastName,
+      ContactPhone: phoneNumber,
+      ContactEmail: contactEmail
+    })
+    .returning('EventContactID') // Get the Contact ID
+    .then(([contact]) => {
+      if (!contact || !contact.EventContactID) {
+        throw new Error('Error retrieving EventContactID');
+      }
 
-        // Now insert into Events using the returned ContactID
-        return trx('Events')
-          .insert({
-            EventDate: finalEventDate,
-            StartTime: startTime,
-            StatusID: StatusID,
-            Duration: duration,
-            EventAddress: address,
-            EventCity: city,
-            EventState: state,
-            EventType: eventType,
-            Participants: participants,
-            TmNeeded: TmNeeded,
-            JenStory: shareStory === 'on' ? true : false,
-            EventContactID: contact.EventContactID // Use the Contact ID in the Events table
-          });
-      })
-      .then(() => {
-        // If everything is successful, commit the transaction
-        trx.commit();
-        // Send success response with alert and redirect
-        res.send(`<script>alert('Event successfully submitted!'); window.location.href = '/viewEventRequests';</script>`);
-      })
-      .catch((error) => {
-        // In case of error, rollback the transaction
-        trx.rollback();
-        console.error(error);
-        res.status(500).send('There was an error submitting the event.');
-      });
+      // Insert into Events using the returned ContactID
+      return trx('Events')
+        .insert({
+          EventDate: finalEventDate,
+          StartTime: startTime,
+          StatusID: StatusID,
+          Duration: duration,
+          EventAddress: address,
+          EventCity: city,
+          EventState: state,
+          TypeID: TypeID,
+          ExpectedParticipants: participants,
+          TmNeeded: TmNeeded,
+          JenStory: shareStory === 'on' ? true : false,
+          EventContactID: contact.EventContactID // Use the Contact ID in the Events table
+        });
+    })
+    .then(() => {
+      // After inserting into Events, delete the corresponding record from EventRequests
+      return trx('EventRequests')
+        .where('EventID', EventID) // Assuming the EventID is passed from the form
+        .del();
+    })
+    .then(() => {
+      // Commit the transaction after successful deletion
+      trx.commit();
+      // Send success response with alert and redirect
+      res.send(
+        `<script>alert('Event successfully submitted and request deleted!'); window.location.href = '/viewEventRequests';</script>`
+      );
+    })
+    .catch((error) => {
+      // In case of error, rollback the transaction
+      trx.rollback();
+      console.error(error);
+      res.status(500).send('There was an error submitting the event.');
+    });
   });
 });
 
