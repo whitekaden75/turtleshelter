@@ -58,12 +58,7 @@
                 <option value="LOCAL EVENT" <%= Volunteer.ReferralSourceType === "LOCAL EVENT" ? "selected" : "" %>>LOCAL EVENT</option>
                 <option value="OTHER" <%= Volunteer.ReferralSourceType === "OTHER" ? "selected" : "" %>>OTHER</option>
             </select>
-    
-            <form action="/editvolunteer/<%= Volunteer.VolunteerID %>" method="POST">
-                <!-- Form fields go here -->
-                <button class="btn" type="submit">Save Changes</button>
-            </form>
-            
+                <button class="btn" type="submit">Save Changes</button>        
         </form>
     
         <!-- Back to volunteers button -->
