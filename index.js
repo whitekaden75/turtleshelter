@@ -385,6 +385,7 @@ app.get('/viewAllEvents', (req, res) => {
   // If "COMPLETED" status is selected, fetch additional columns
   if (statusFilter === 'COMPLETED') {
     query.select(
+      'Events.EventID',
       'Contact.ContactFirstName',
       'Contact.ContactLastName',
       'Contact.ContactPhone',
@@ -405,11 +406,13 @@ app.get('/viewAllEvents', (req, res) => {
       'Events.Envelopes',
       'Events.TotalProducts',
       'Events.TmNeeded',
-      'Events.TmSignedUp'
+      'Events.TmSignedUp',
+      'Status.EventStatus'
     );
   } else {
     // For non-COMPLETED statuses, only select the basic columns
     query.select(
+      'Events.EventID',
       'Contact.ContactFirstName',
       'Contact.ContactLastName',
       'Contact.ContactPhone',
@@ -422,7 +425,8 @@ app.get('/viewAllEvents', (req, res) => {
       'Events.Duration',
       'EventType.EventType',
       'Events.JenStory',
-      'Events.ExpectedParticipants'
+      'Events.ExpectedParticipants',
+      'Status.EventStatus'
     );
   }
 
@@ -435,7 +439,87 @@ app.get('/viewAllEvents', (req, res) => {
   });
 });
 
+// edit Event route GET
+app.get('/editEvent/:id', (req, res) => {
+  const eventID = req.params.id; // Use EventID from the URL
+  knex('Events')
+      .join('Contact', 'Contact.EventContactID', '=', 'Events.EventContactID')
+      .join('EventType', 'EventType.TypeID', '=', 'Events.TypeID')
+      .join('Status', 'Status.StatusID', '=', 'Events.StatusID')
+      .select()
+      .where('Events.EventID', eventID) // Filter by EventID
+      .then(event => {
+          if (event.length > 0) {
+              res.render('editEvent', { event: event[0] }); // Pass the first event to the template
+          } else {
+              res.status(404).send('Event not found');
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching event:', error);
+          res.status(500).send('Internal Server Error');
+      });
+});
 
+
+// editEvent route POST
+app.post('/editEvent/:id', async (req, res) => {
+  try {
+    const eventID = req.params.id; // Use EventID from the URL
+    const {
+      EventDate,
+      EventAddress,
+      EventCity,
+      EventState,
+      StartTime,
+      Duration,
+      JenStory,
+      ExpectedParticipants,
+      ActualParticipants,
+      Pockets,
+      Vests,
+      Collars,
+      Envelopes,
+      TotalProducts,
+      TmNeeded,
+      TmSignedUp,
+      StatusID,
+      TypeID,
+      EventContactID
+    } = req.body;
+
+    // Update the event details in the database using knex
+    await knex('Events')
+      .where('EventID', eventID)
+      .update({
+        EventDate,
+        EventAddress,
+        EventCity,
+        EventState,
+        StartTime,
+        Duration,
+        JenStory,
+        ExpectedParticipants,
+        ActualParticipants,
+        Pockets,
+        Vests,
+        Collars,
+        Envelopes,
+        TotalProducts,
+        TmNeeded,
+        TmSignedUp,
+        StatusID,
+        TypeID,
+        EventContactID,
+      });
+
+    // Redirect to the events list page
+    res.redirect('/viewAllEvents');
+  } catch (err) {
+    console.error('Error updating event:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 // Event Request routes
