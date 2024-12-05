@@ -1,67 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Contact</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <style>
-    button {
-      padding: 8px 12px;
-      background-color: #7d9a6d; /* Primary green */
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background-color: #4a7b9d; /* Accent blue */
-    }
-    .center-btn {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
+      button {
+        padding: 8px 12px;
+        background-color: #7d9a6d; /* Primary green */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #4a7b9d; /* Accent blue */
+      }
+      .center-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header Section -->
     <header>
-        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-        <nav class="right-align">
-            <a href="/">HOME</a>
-            <a href="/viewvolunteers">VOLUNTEERS</a>
-        </nav>
+      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+      <nav class="right-align">
+        <a href="/">HOME</a>
+        <a href="/viewvolunteers">VOLUNTEERS</a>
+      </nav>
     </header>
 
-    <h1 style="text-align: center;" class="page-title">Add Contact</h1>
+    <h1 style="text-align: center" class="page-title">Add Contact</h1>
 
     <!-- Form to add a new contact -->
     <div class="middlepage">
-        <form action="/addContact" method="POST" class="middlepage">
-            <label for="ContactFirstName">First Name:</label>
-            <input type="text" id="ContactFirstName" name="ContactFirstName" required />
-    
-            <label for="ContactLastName">Last Name:</label>
-            <input type="text" id="ContactLastName" name="ContactLastName" required />
-    
-            <label for="ContactEmail">Email:</label>
-            <input type="email" id="ContactEmail" name="ContactEmail" required />
-    
-            <label for="ContactPhone">Phone:</label>
-            <input type="text" id="ContactPhone" name="ContactPhone" required />
-    
-            <label for="GroupName">Group Name:</label>
-            <input type="text" id="GroupName" name="GroupName" required />
+      <form action="/addContact" method="POST" class="middlepage">
+        <label for="ContactFirstName">First Name:</label>
+        <input
+          type="text"
+          id="ContactFirstName"
+          name="ContactFirstName"
+          required />
 
-            <button type="submit" class="center-btn">Add Contact</button>
-        </form>
-    
-        <!-- Back to contacts button -->
-        <div style="text-align: right; padding: 10px;">
-            <a href="/manageContacts" class="btn">Cancel</a>
-        </div>
+        <label for="ContactLastName">Last Name:</label>
+        <input
+          type="text"
+          id="ContactLastName"
+          name="ContactLastName"
+          required />
+
+        <label for="ContactEmail">Email:</label>
+        <input type="email" id="ContactEmail" name="ContactEmail" required />
+
+        <label for="ContactPhone">Phone:</label>
+        <input type="text" id="ContactPhone" name="ContactPhone" required />
+
+        <label for="GroupName">Group Name:</label>
+        <input type="text" id="GroupName" name="GroupName" required />
+
+        <button type="submit" class="center-btn">Add Contact</button>
+      </form>
+
+      <!-- Back to contacts button -->
+      <div style="text-align: right; padding: 10px">
+        <a href="/manageContacts" class="btn">Cancel</a>
+      </div>
     </div>
-</body>
+  </body>
 </html>
