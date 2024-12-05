@@ -102,9 +102,9 @@
                     <td><%= volunteer.ReferralSourceType %></td>
                     <td>
                         <!-- Edit Button -->
-                        <a href="/editvolunteer/<%= volunteer.SewingID %>" class="btn">Edit</a>
+                        <a href="/editvolunteer/<%= volunteer.VolunteerID %>" class="btn">Edit</a>
                         <!-- Delete Button -->
-                        <form action="/deletevolunteer/<%= volunteer.SewingID %>" method="POST" style="display:inline;">
+                        <form action="/deletevolunteer/<%= volunteer.VolunteerID %>" method="POST" style="display:inline;">
                             <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete this volunteer?');">Delete</button>
                         </form>
                     </td>
