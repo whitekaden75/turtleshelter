@@ -668,6 +668,67 @@ app.post('/addContact', (req, res) => {
     });
 });
 
+// Route to display the mailing list
+app.get('/mailingList', async (req, res) => {
+  try {
+    const volunteers = await knex('Volunteer').select('VolEmail');
+    res.render('mailingList', { 
+      volunteers, 
+      alertMessage: '' // Default empty alert message
+    });
+  } catch (error) {
+    console.error('Error fetching volunteers:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Route to handle sending mass email
+const nodemailer = require('nodemailer');
+
+// Configure the transporter with Gmail and your App Password
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'benkeeney962@gmail.com', // Your Gmail address
+    pass: 'dxou wldi oeat kgdb'      // Replace this with your App Password
+  }
+});
+
+// Route to handle sending the email
+app.post('/sendMail', async (req, res) => {
+  const subject = req.body.subject;
+  const message = req.body.message;
+
+  try {
+    // Fetch the volunteers' email addresses from the database
+    const volunteers = await knex('Volunteer').select('VolEmail');
+    const recipientEmails = volunteers.map(v => v.VolEmail).join(',');
+
+    // Send the email using the transporter
+    await transporter.sendMail({
+      from: 'benkeeney962@gmail.com',
+      to: '',
+      bcc: recipientEmails,
+      subject: subject,
+      text: message
+    });
+
+    // Render the mailing list with a success alert
+    res.render('mailingList', { 
+      volunteers, 
+      alertMessage: 'Emails sent successfully!' 
+    });
+  } catch (error) {
+    console.error('Error sending email:', error);
+
+    // Fetch the volunteers again for displaying in case of an error
+    const volunteers = await knex('Volunteer').select('VolEmail');
+    res.render('mailingList', { 
+      volunteers,
+      alertMessage: 'Failed to send emails. Please try again.' 
+    });
+  }
+});
 
 app.listen(port, () => console.log("listening"));
 
