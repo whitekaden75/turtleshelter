@@ -257,7 +257,7 @@ app.get('/reviewRequest/:eventID', (req, res) => {
 app.post('/reviewRequest', (req, res) => {
   const {
     finalEventDate, startTime, duration, address, city, state,
-    firstName, lastName, phoneNumber, TypeID, shareStory, participants, TmNeeded, contactEmail, StatusID
+    firstName, lastName, phoneNumber, TypeID, shareStory, participants, TmNeeded, contactEmail, StatusID, groupName
   } = req.body;
   const EventID = parseInt(req.body.EventID, 10);
 
@@ -265,10 +265,11 @@ app.post('/reviewRequest', (req, res) => {
 knex.transaction((trx) => {
   trx('Contact')
     .insert({
-      ContactFirstName: firstName,
-      ContactLastName: lastName,
+      ContactFirstName: firstName.toUpperCase(),
+      ContactLastName: lastName.toUpperCase(),
       ContactPhone: phoneNumber,
-      ContactEmail: contactEmail
+      ContactEmail: contactEmail.toUpperCase(),
+      GroupName : groupName.toUpperCase()
     })
     .returning('EventContactID') // Get the Contact ID
     .then(([contact]) => {
@@ -283,9 +284,9 @@ knex.transaction((trx) => {
           StartTime: startTime,
           StatusID: StatusID,
           Duration: duration,
-          EventAddress: address,
-          EventCity: city,
-          EventState: state,
+          EventAddress: address.toUpperCase(),
+          EventCity: city.toUpperCase(),
+          EventState: state.toUpperCase(),
           TypeID: TypeID,
           ExpectedParticipants: participants,
           TmNeeded: TmNeeded,
@@ -304,7 +305,7 @@ knex.transaction((trx) => {
       trx.commit();
       // Send success response with alert and redirect
       res.send(
-        `<script>alert('Event successfully submitted and request deleted!'); window.location.href = '/viewEventRequests';</script>`
+        `<script>alert('Event successfully submitted!'); window.location.href = '/viewEventRequests';</script>`
       );
     })
     .catch((error) => {
@@ -438,14 +439,6 @@ app.get('/viewAllEvents', (req, res) => {
 
 
 // Event Request routes
-app.get("/eventRequest", (req,res) => {
-  knex("EventType")
-  .select()
-  .then(type => {
-    res.render("eventRequest", {type})
-  });
-});
-
 app.post("/eventRequest", (req, res) => {
   // Extract data from the form
   const proposedDate1 = req.body.proposedDate1 || null;
@@ -462,6 +455,8 @@ app.post("/eventRequest", (req, res) => {
   const eventType = req.body.eventType;
   const shareStory = req.body.shareStory;
   const participants = parseInt(req.body.participants, 10);
+  const ContactEmail = req.body.ContactEmail;
+  const groupName = req.body.groupName
 
   // Append ":00" for seconds, if it's missing
   if (startTime && startTime.length === 5) {
@@ -482,7 +477,9 @@ app.post("/eventRequest", (req, res) => {
     ContactPhone : phoneNumber,
     EventType : eventType,
     JenStory : shareStory ? "true" : "false",
-    Participants : participants
+    Participants : participants,
+    ContactEmail : ContactEmail,
+    GroupName : groupName
   })
   .then(() => {
     res.redirect("/")
