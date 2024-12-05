@@ -527,6 +527,15 @@ app.post('/editEvent/:id', async (req, res) => {
 
 
 // Event Request routes
+
+app.get("/eventRequest", (req,res) => {
+  knex("EventType")
+  .select()
+  .then(type => {
+    res.render("eventRequest", {type})
+  });
+});
+
 app.post("/eventRequest", (req, res) => {
   // Extract data from the form
   const proposedDate1 = req.body.proposedDate1 || null;
