@@ -149,7 +149,7 @@ app.get('/viewvolunteers', (req, res) => {
   knex('Volunteer')
     .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
     .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
-    .select('VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .select('VolunteerID','VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
     .then(volunteers => {
       res.render('viewvolunteers', { volunteers });
     })
@@ -158,17 +158,21 @@ app.get('/viewvolunteers', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
-
 // Edit route (optional)
 app.get('/editvolunteer/:id', (req, res) => {
-  const volunteerID = req.params.id;  // Use VolunteerID instead of SewingID
+  const volunteerID = req.params.id;
   knex('Volunteer')
     .join('SewingLevel', 'SewingLevel.SewingID', '=', 'Volunteer.SewingID')
     .join('ReferralSource', 'ReferralSource.ReferralSourceID', '=', 'Volunteer.ReferralSourceID')
-    .select('VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.VolunteerID', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
-    .where('Volunteer.VolunteerID', volunteerID)  // Change from SewingID to VolunteerID
+    .select('VolunteerID','VolFirstName', 'VolLastName', 'VolEmail', 'VolPhone', 'HoursAvailable', 'SewingLevel.SewingLevel', 'ReferralSource.ReferralSourceType', 'Volunteer.SewingID', 'Volunteer.ReferralSourceID')
+    .where('Volunteer.VolunteerID', volunteerID)
+    .first()
     .then(Volunteer => {
-      res.render('editvolunteer', { Volunteer: Volunteer[0] });
+      console.log(Volunteer);  // Log the data
+      if (!Volunteer) {
+        return res.status(404).send('Volunteer not found');
+      }
+      res.render('editvolunteer', { Volunteer });
     })
     .catch(error => {
       console.error('Error fetching volunteer:', error);
