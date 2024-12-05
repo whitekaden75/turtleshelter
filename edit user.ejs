@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User</title>
+  </head>
+  <body>
+    <!-- this is the form to edit a specific planet -->
+    <form action="/edituser/<%=Admin.AdminID%>" method="post">
+      <label for="name">First Name</label>
+      <input
+        type="text"
+        name="firstname"
+        id="firstname"
+        value="<%=Admin.FirstName%>" />
+      <label for="name">Last Name</label>
+      <input
+        type="text"
+        name="lastname"
+        id="lastname"
+        value="<%=Admin.LastName%>" />
+      <label for="name">Username</label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        value="<%=Admin.Username%>" />
+        <label for="password">Password</label>
+        <input
+          type="text"
+          name="password"
+          id="password"
+          value="<%=Admin.Password%>" />
+        <label for="usertype">User Type</label>
+        <!-- this is my for loop for the drop down planet name menu -->
+      <select id="UserType" name="UserType">
+        <% UserType.forEach(row => { %>
+          <option value="<%= row.UserTypeID %>" <%= UserType.UserTypeID === row.UserTypeID ? 'selected' : '' %>>
+            <%= row.UserType %>
+          </option>
+        <% }) %>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
+
+
