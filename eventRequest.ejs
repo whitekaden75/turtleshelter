@@ -87,8 +87,16 @@
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             placeholder="123-456-7890"
             required />
-        
+
           <!-- Question 10 -->
+          <label for="ContactEmail">Preferred Contact Email:</label>
+          <input type="text" id="ContactEmail" name="ContactEmail" required />
+
+          <!-- Question 11 -->
+          <label for="groupName">Group Name:</label>
+          <input type="text" id="groupName" name="groupName" required />
+        
+          <!-- Question 12 -->
           <label for="eventType">Event Type:</label>
           <select id="eventType" name="eventType" required>
             <% type.forEach(event => { %>
@@ -97,11 +105,8 @@
               </option>
             <% }); %>
           </select>
-
-          <!-- < event.TypeID === type.TypeID ? 'selected' : '' %> -->
-          
         
-          <!-- Question 11 -->
+          <!-- Question 13 -->
           <div class="checkbox-group">
             <input
               type="checkbox"
@@ -111,7 +116,7 @@
             <label for="shareStory">Would you like Jen to share her story?</label>
           </div>
         
-          <!-- Question 12 -->
+          <!-- Question 14 -->
           <label for="participants">Estimated Number of Participants:</label>
           <input
             type="number"
@@ -119,7 +124,9 @@
             name="participants"
             min="1"
             required />
-        
+
+
+
           <!-- Submit Button -->
           <button type="submit" class="btn">Submit Event Request</button>
         </form>
