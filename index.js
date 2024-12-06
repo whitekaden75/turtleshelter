@@ -625,6 +625,7 @@ app.get("/signUp", (req, res) => {
     .join("Status", "Events.StatusID", "=", "Status.StatusID")
     .select()
     .where("Status.EventStatus", "APPROVED")
+    .orderBy("Events.EventDate", "asc") // Order by EventDate in ascending order
     .then((events) => {
       res.render("signUp", { events });
     })
