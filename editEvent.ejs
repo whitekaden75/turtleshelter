@@ -1,101 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Event</title>
     <link rel="stylesheet" href="/css/styles.css" />
-</head>
-<body>
     <style>
-        .back-to-home-btn {
-            position: absolute;
-            right: 10px;
-            top: 690px; /* Adjust the top margin as needed */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Transparent Navigation Bar */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            height: 50px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: lightgreen;
+        }
+
+        /* Form Styling */
+        .middlepage {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Title Styling */
+        h2 {
+            color: black;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
             padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: lightgreen;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #89e589;
+            transform: scale(1.05);
+        }
+
+        /* Cancel Button Styling */
+        .cancel-btn {
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;  /* Ensure the width matches submit button */
+        }
+
+        .cancel-btn:hover {
+            background-color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        footer a {
+            color: lightgray;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .input-container {
+            margin-bottom: 15px;
+        }
+
+        .input-container input, .input-container select {
+            font-size: 14px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .checkbox-group label {
+            font-weight: bold;  /* Bolded label for Jen's Story */
         }
     </style>
-    <!-- Header Section -->
-    <header>
-        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-        <nav class="right-align">
-            <a href="/">HOME</a>
-            <a href="/viewevents">EVENTS</a>
-        </nav>
-    </header>
-
-    <h1 style="text-align: center;" class="page-title">Edit Event</h1>
-
-    <!-- Form to edit event details -->
-    <div class="middlepage">
-        <form action="/editEvent/<%= event.EventID %>" method="POST">
-            <label for="EventDate">Event Date:</label>
-            <input type="date" name="EventDate" value="<%= event.EventDate %>" required><br>
-            
-            <label for="EventAddress">Event Address:</label>
-            <input type="text" name="EventAddress" value="<%= event.EventAddress %>" required><br>
-            
-            <label for="EventCity">Event City:</label>
-            <input type="text" name="EventCity" value="<%= event.EventCity %>" required><br>
-            
-            <label for="EventState">Event State:</label>
-            <input type="text" name="EventState" value="<%= event.EventState %>" required><br>
-            
-            <label for="StartTime">Start Time:</label>
-            <input type="time" name="StartTime" value="<%= event.StartTime %>" required><br>
-            
-            <label for="Duration">Duration:</label>
-            <input type="text" name="Duration" value="<%= event.Duration %>" required><br>
-            
-            <label for="JenStory">Jen's Story:</label>
-            <input type="text" name="JenStory" value="<%= event.JenStory %>" required><br>
-            
-            <label for="ExpectedParticipants">Expected Participants:</label>
-            <input type="number" name="ExpectedParticipants" value="<%= event.ExpectedParticipants %>" required><br>
-            
-            <label for="TmNeeded">Team Members Needed:</label>
-            <input type="number" name="TmNeeded" value="<%= event.TmNeeded %>" required><br>
-            
-            <label for="ActualParticipants">Actual Participants:</label>
-            <input type="number" name="ActualParticipants" value="<%= event.ActualParticipants %>" required><br>
-
-            <label for="Pockets">Pockets:</label>
-            <input type="number" name="Pockets" value="<%= event.Pockets %>" required><br>
-
-            <label for="Vests">Vests:</label>
-            <input type="number" name="Vests" value="<%= event.Vests %>" required><br>
-
-            <label for="Collars">Collars:</label>
-            <input type="number" name="Collars" value="<%= event.Collars %>" required><br>
-
-            <label for="Envelopes">Envelopes:</label>
-            <input type="number" name="Envelopes" value="<%= event.Envelopes %>" required><br>
-
-            <label for="TotalProducts">Total Products:</label>
-            <input type="number" name="TotalProducts" value="<%= event.TotalProducts %>" required><br>
-
-            <label for="TmSignedUp">Team Members Signed Up:</label>
-            <input type="number" name="TmSignedUp" value="<%= event.TmSignedUp %>" required><br>
-
-            <label for="EventStatus">Event Status:</label>
-            <select id="EventStatus" name="EventStatus" required>
-            <% statuses.forEach(status => { %>
-                <option value="<%= status.StatusID %>" 
-                <%= event.StatusID === status.StatusID ? 'selected' : '' %>>
-                <%= status.EventStatus %>
-                </option>
-            <% }); %>
-            </select>
-            <!-- Add additional fields if necessary -->
-            
-            <button type="submit">Save Changes</button>
-        </form>
-        
-
-        <!-- Back to events button -->
-        <div class="back-to-home-btn" style="text-align: right; padding: 50px;">
-            <a href="/viewAllEvents" class="btn">Cancel</a>
-        </div>
+</head>
+<body>
+    <!-- Transparent Navigation Bar -->
+    <div class="nav-bar">
+        <a href="/">Home</a>
+        <a href="/viewAllEvents">View All Events</a>
     </div>
+
+    <main>
+        <form action="/editEvent/<%= event.EventID %>" method="POST" class="middlepage">
+            <h2>Edit Event</h2>
+
+            <!-- Event Information -->
+            <div class="input-container">
+                <label for="EventDate">Event Date:</label>
+                <input type="date" id="EventDate" name="EventDate" value="<%= event.EventDate %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="EventAddress">Event Address:</label>
+                <input type="text" id="EventAddress" name="EventAddress" value="<%= event.EventAddress %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="EventCity">Event City:</label>
+                <input type="text" id="EventCity" name="EventCity" value="<%= event.EventCity %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="EventState">Event State:</label>
+                <input type="text" id="EventState" name="EventState" value="<%= event.EventState %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="StartTime">Start Time:</label>
+                <input type="time" id="StartTime" name="StartTime" value="<%= event.StartTime %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="Duration">Duration:</label>
+                <input type="text" id="Duration" name="Duration" value="<%= event.Duration %>" required />
+            </div>
+
+            <!-- Jen's Story as Checkbox -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="JenStory" name="JenStory" value="true" <%= event.JenStory === true ? 'checked' : '' %> />
+                <label for="JenStory">Jen's Story</label>
+            </div>
+
+            <div class="input-container">
+                <label for="ExpectedParticipants">Expected Participants:</label>
+                <input type="number" id="ExpectedParticipants" name="ExpectedParticipants" value="<%= event.ExpectedParticipants %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="TmNeeded">Team Members Needed:</label>
+                <input type="number" id="TmNeeded" name="TmNeeded" value="<%= event.TmNeeded %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="ActualParticipants">Actual Participants:</label>
+                <input type="number" id="ActualParticipants" name="ActualParticipants" value="<%= event.ActualParticipants %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="Pockets">Pockets:</label>
+                <input type="number" id="Pockets" name="Pockets" value="<%= event.Pockets %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="Vests">Vests:</label>
+                <input type="number" id="Vests" name="Vests" value="<%= event.Vests %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="Collars">Collars:</label>
+                <input type="number" id="Collars" name="Collars" value="<%= event.Collars %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="Envelopes">Envelopes:</label>
+                <input type="number" id="Envelopes" name="Envelopes" value="<%= event.Envelopes %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="TotalProducts">Total Products:</label>
+                <input type="number" id="TotalProducts" name="TotalProducts" value="<%= event.TotalProducts %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="TmSignedUp">Team Members Signed Up:</label>
+                <input type="number" id="TmSignedUp" name="TmSignedUp" value="<%= event.TmSignedUp %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="EventStatus">Event Status:</label>
+                <select id="EventStatus" name="EventStatus" required>
+                    <% statuses.forEach(status => { %>
+                        <option value="<%= status.StatusID %>" <%= event.StatusID === status.StatusID ? 'selected' : '' %>>
+                            <%= status.EventStatus %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Save Changes</button>
+
+            <!-- Cancel Button -->
+            <a href="/viewAllEvents" class="cancel-btn">Cancel</a>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Event Planner. All rights reserved.</p>
+    </footer>
 </body>
 </html>
