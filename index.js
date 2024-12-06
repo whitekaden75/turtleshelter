@@ -208,9 +208,30 @@ app.post("/addvolunteer", (req, res) => {
       ReferralSourceID: ReferralSourceID, // Store the referral source ID
     })
     .then(() => {
-      // Redirect to home page or another relevant page after successful insertion
-      successMessage: 'New Volunteer Sucessfully Created!',
-      res.redirect("/");
+      // Fetch the updated data if needed (optional)
+      knex("SewingLevel")
+        .select("SewingID", "SewingLevel")
+        .then((sewingLevels) => {
+          knex("ReferralSource")
+            .select("ReferralSourceID", "ReferralSourceType")
+            .then((referralSources) => {
+              // Render the success message back to the form or relevant page
+              res.render("newvolunteer", {
+                sewingLevels,
+                referralSources,
+                successMessage: "New Volunteer Successfully Created!",
+                redirectTo: "/",
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching referral sources:", error);
+              res.status(500).send("Internal Server Error");
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching sewing levels:", error);
+          res.status(500).send("Internal Server Error");
+        });
     })
     .catch((error) => {
       console.error("Error adding volunteer:", error);
