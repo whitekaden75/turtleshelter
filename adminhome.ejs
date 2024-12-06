@@ -1,10 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle Shelter Project</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <style>
+      /* General Styles */
+      body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px 20px;
+        height: 50px;
+      }
+
+      .nav-bar a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        margin-left: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      .nav-bar a:hover {
+        color: lightgreen;
+      }
+
+      footer {
+        width: 100%;
+        margin: 0;
+        padding: 20px 0;
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+      }
+
+      h1 {
+        color: #004d40;
+        text-align: center;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 60px);
+      }
+
+      .login-form {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: #4d4d4d; /* Dark grey button color */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 10px auto;
+        text-align: center;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+        width: 200px; /* Uniform button width */
+        height: 50px; /* Uniform button height */
+      }
+
+      .btn:hover {
+        background-color: #333333; /* Slightly darker hover effect */
+        transform: scale(1.05);
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .menu {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 900px;
+        margin: 20px auto;
+        text-align: center;
+        background-color: #eaf7e4; /* Light pastel green background */
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      .menu img {
+        max-width: 100%;
+        height: auto;
+        margin: 20px auto;
+        display: block;
+      }
+    </style>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         let security = `<%= security %>`;
@@ -12,24 +125,23 @@
         console.log("normal", security);
         console.log("sudo", sudoSecurity);
 
-        // Check user access level and display corresponding section
         if (security === "false" && sudoSecurity === "false") {
-          console.log("Invalid user detected");
           document.getElementById("badUser").style.display = "block";
         } else if (security === "true") {
-          console.log("Normal user detected");
           document.getElementById("normalUser").style.display = "block";
         } else if (sudoSecurity === "true") {
-          console.log("Sudo user detected");
           document.getElementById("sudoUser").style.display = "block";
         }
       });
     </script>
   </head>
   <body>
-    <header>
-      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-    </header>
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+      <a href="/">Home</a>
+      <a href="/eventRequest">Request Event</a>
+      <a href="/login">Login</a>
+    </div>
 
     <!-- Invalid User Section -->
     <div id="badUser" style="display: none">
@@ -46,26 +158,9 @@
       <main>
         <h1>Hello Admin!</h1>
         <div class="menu">
-          <div>
-            <button class="btn" onclick="window.location.href='/page1'">
-              Volunteers
-            </button>
-          </div>
-          <hr />
-          <div>
-            <h2>Events</h2>
-            <button class="btn" onclick="window.location.href='/page1'">
-              Events Statistics
-            </button>
-            <button class="btn" onclick="window.location.href='/page1'">
-              Event Calendar
-            </button>
-          </div>
-          <div>
-            <button class="btn" onclick="window.location.href='/signUp'">
-              Sign Up For An Event
-            </button>
-          </div>
+          <button class="btn" onclick="window.location.href='/page1'">Events Statistics</button>
+          <button class="btn" onclick="window.location.href='/viewAllEvents'">Event Calendar</button>
+          <button class="btn" onclick="window.location.href='/signUp'">Sign Up For An Event</button>
         </div>
       </main>
     </div>
@@ -74,57 +169,25 @@
     <div id="sudoUser" style="display: none">
       <main>
         <h1>Hello Sudo Admin!</h1>
-        <div class="menu">
-          <div>
-            <button
-              class="btn"
-              onclick="window.location.href='/viewvolunteers'">
-              Volunteers
-            </button>
-          </div>
-          <hr />
-          <div>
-            <h2>Events</h2>
-            <button class="btn" onclick="window.location.href='/page1'">
-              Events Statistics
-            </button>
-            <button
-              class="btn"
-              onclick="window.location.href='/viewEventRequests'">
-              Event requests
-            </button>
-          </div>
 
-          <hr />
-          <div>
-            <button class="btn" onclick="window.location.href='/user'">
-              View Admins
-            </button>
-          </div>
-          <button class="btn" onclick="window.location.href='/manageContacts'">
-            Manage Contacts
-          </button>
-        </div>
-        <div>
-          <button class="btn" onclick="window.location.href='/signUp'">
-            Sign Up For An Event
-          </button>
-        </div>
-        <div>
-          <button class="btn" onclick="window.location.href='/viewAllEvents'">
-            View All Events
-          </button>
-        </div>
-        <div>
-          <button class="btn" onclick="window.location.href='/mailingList'">
-            mailingList
-          </button>
+        <!-- Centered Image -->
+        <img src="/assets/TransparentTSPLogo.png" 
+             alt="Admin Dashboard" 
+             style="width: 300px; height: auto; display: block; margin: 20px auto;">
+
+        <!-- Buttons Grid -->
+        <div class="menu">
+          <button class="btn" onclick="window.location.href='/viewvolunteers'">Volunteers</button>
+          <button class="btn" onclick="window.location.href='/page1'">Events Statistics</button>
+          <button class="btn" onclick="window.location.href='/viewEventRequests'">Event Requests</button>
+          <button class="btn" onclick="window.location.href='/user'">View Admins</button>
+          <button class="btn" onclick="window.location.href='/manageContacts'">Manage Contacts</button>
+          <button class="btn" onclick="window.location.href='/viewAllEvents'">View All Events</button>
+          <button class="btn" onclick="window.location.href='/mailingList'">Mailing List</button>
+          <button class="btn" onclick="window.location.href='/signUp'">Sign Up For Event</button>
         </div>
       </main>
     </div>
 
-    <footer>
-      <p>&copy; 2024 Turtle Shelter Project. All rights reserved.</p>
-    </footer>
   </body>
 </html>
