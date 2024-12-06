@@ -31,6 +31,8 @@ const knex = require("knex")({
 
 app.get("/", (req, res) => res.render("index"));
 
+app.get("/jenstory", (req, res) => res.render("jenstory"));
+
 app.get("/adminhome", (req, res) => {
   // Ensure the 'security' variable is being passed
   res.render("adminhome", { sudoSecurity, security });
