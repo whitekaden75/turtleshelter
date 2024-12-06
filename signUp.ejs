@@ -1,69 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Event Sign-Up</title>
-    <!-- Ensure the correct path to your CSS file -->
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: black;
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            height: 60px;
+        }
+
+        header .left-align {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: gray;
+        }
+
+        /* Modern Table Styling */
+        table {
+            width: 100%;
+            max-width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-size: 16px;
+            text-align: left;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        td {
+            background-color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3f3f3;
+        }
+
+        tr:hover {
+            background-color: #e1e1e1;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 8px 14px;
+            background-color: #333;
+            color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+            border-color: #888;
+        }
+
+        button:active {
+            background-color: #444;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Back to Home Button */
+        .back-home-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-home-btn:hover {
+            background-color: #555;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+                max-width: 100%;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
     <!-- Header Section -->
     <header>
-      <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-      <nav class="right-align">
-        <a href="/">HOME</a>
-        <a href="/viewvolunteers">VOLUNTEERS</a>
-      </nav>
+        <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
+        <nav class="right-align">
+            <a href="/">Home</a>
+            <a href="/viewvolunteers">Volunteers</a>
+        </nav>
     </header>
 
     <h1>Approved Events</h1>
 
     <% if (events.length > 0) { %>
     <table>
-      <thead>
-        <tr>
-          <th>Event Date</th>
-          <th>Event Address</th>
-          <th>Event City</th>
-          <th>Event State</th>
-          <th>Start Time</th>
-          <th>Volunteers Needed</th>
-          <th>Volunteers Signed Up</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% events.forEach(event => { %>
-        <tr>
-          <td><%= event.EventDate %></td>
-          <td><%= event.EventAddress %></td>
-          <td><%= event.EventCity %></td>
-          <td><%= event.EventState %></td>
-          <td><%= event.StartTime %></td>
-          <td><%= event.TmNeeded %></td>
-          <td><%= event.TmSignedUp %></td>
-          <td>
-            <% if (event.TmSignedUp < event.TmNeeded) { %>
-            <form action="/signUp/<%= event.EventID %>" method="POST">
-              <button type="submit">Sign Up</button>
-            </form>
-            <% } else { %>
-            <span>Event Full</span>
-            <% } %>
-          </td>
-        </tr>
-        <% }); %>
-      </tbody>
+        <thead>
+            <tr>
+                <th>Event Date</th>
+                <th>Event Address</th>
+                <th>Event City</th>
+                <th>Event State</th>
+                <th>Start Time</th>
+                <th>Volunteers Needed</th>
+                <th>Volunteers Signed Up</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% events.forEach(event => { %>
+            <tr>
+                <td><%= event.EventDate %></td>
+                <td><%= event.EventAddress %></td>
+                <td><%= event.EventCity %></td>
+                <td><%= event.EventState %></td>
+                <td><%= event.StartTime %></td>
+                <td><%= event.TmNeeded %></td>
+                <td><%= event.TmSignedUp %></td>
+                <td>
+                    <% if (event.TmSignedUp < event.TmNeeded) { %>
+                    <form action="/signUp/<%= event.EventID %>" method="POST">
+                        <button type="submit">Sign Up</button>
+                    </form>
+                    <% } else { %>
+                    <span>Event Full</span>
+                    <% } %>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
     </table>
     <% } else { %>
     <p>No approved events available at the moment.</p>
     <% } %>
 
-    <br />
     <!-- Back to Home Button -->
     <button class="back-home-btn" onclick="location.href='/'">
-      Back to Home
+        Back to Home
     </button>
-  </body>
+</body>
 </html>
