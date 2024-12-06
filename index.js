@@ -803,4 +803,88 @@ app.post("/sendMail", async (req, res) => {
   }
 });
 
+// edit Event route GET
+app.get('/editEvent/:id', (req, res) => {
+  const eventID = req.params.id; // Use EventID from the URL
+
+  // Fetch the event and statuses
+  Promise.all([
+    knex('Events')
+      .join('Contact', 'Contact.EventContactID', '=', 'Events.EventContactID')
+      .join('EventType', 'EventType.TypeID', '=', 'Events.TypeID')
+      .join('Status', 'Status.StatusID', '=', 'Events.StatusID')
+      .select()
+      .where('Events.EventID', eventID)
+      .first(), // Get a single event
+    knex('Status').select('StatusID', 'EventStatus') // Fetch all statuses
+  ])
+    .then(([event, statuses]) => {
+      if (event) {
+        res.render('editEvent', { event, statuses });
+      } else {
+        res.status(404).send('Event not found');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching event or statuses:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Edit event route POST
+app.post('/editEvent/:id', async (req, res) => {
+  const eventID = req.params.id; // EventID from the URL
+  try {
+    // Extract only the fields from the form
+    const {
+      EventDate,
+      EventAddress,
+      EventCity,
+      EventState,
+      StartTime,
+      Duration,
+      JenStory,
+      ExpectedParticipants,
+      ActualParticipants,
+      Pockets,
+      Vests,
+      Collars,
+      Envelopes,
+      TotalProducts,
+      TmNeeded,
+      TmSignedUp,
+      EventStatus, // StatusID
+    } = req.body;
+
+    // Update the Events table
+    await knex('Events')
+      .where('EventID', eventID)
+      .update({
+        EventDate,
+        EventAddress,
+        EventCity,
+        EventState,
+        StartTime,
+        Duration,
+        JenStory,
+        ExpectedParticipants,
+        ActualParticipants,
+        Pockets,
+        Vests,
+        Collars,
+        Envelopes,
+        TotalProducts,
+        TmNeeded,
+        TmSignedUp,
+        StatusID: EventStatus, // Map EventStatus to StatusID column
+      });
+
+    // Redirect to the events list page
+    res.redirect('/viewAllEvents');
+  } catch (err) {
+    console.error('Error updating event:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.listen(port, () => console.log("listening"));
