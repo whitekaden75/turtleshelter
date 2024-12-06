@@ -157,7 +157,7 @@
 
     /* Edit Button Styling */
     .edit-btn {
-      background-color: #4CAF50; /* Green background */
+      background-color: black; /* Black background */
       color: white;
       padding: 4px 10px;
       font-size: 10px; /* Smaller font size */
@@ -168,11 +168,11 @@
     }
 
     .edit-btn:hover {
-      background-color: #45a049;
+      background-color: #444; /* Darker shade of black on hover */
     }
 
     .edit-btn:active {
-      background-color: #388e3c;
+      background-color: #222; /* Even darker on active click */
     }
 
   </style>
@@ -259,14 +259,14 @@
               <td><%= event.TMNeeded %></td>
               <td><%= event.TMSignedUp %></td>
             <% } %>
-            <td><button class="edit-btn">Edit</button></td> <!-- Edit Button -->
+            <td><button class="edit-btn" onclick="window.location.href='/editEvent/<%= event.id %>'">Edit</button></td>
           </tr>
         <% }); %>
       </tbody>
     </table>
     <% } %>
 
-    <!-- Back to Home Button -->
+    <!-- Back Button -->
     <div class="back-to-home-btn">
       <a href="/">Back to Home</a>
     </div>
