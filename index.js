@@ -2,7 +2,6 @@
 let express = require("express");
 let app = express();
 let path = require("path");
-const cors = require("cors");
 
 let security = false;
 let sudoSecurity = false;
