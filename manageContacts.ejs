@@ -7,85 +7,159 @@
     <link rel="stylesheet" href="/css/styles.css" />
 
     <style>
+      /* Navigation Bar */
+      .nav-bar {
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px 20px;
+        height: 50px;
+      }
+
+      .nav-bar a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        margin-left: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      .nav-bar a:hover {
+        color: gray;
+      }
+
       body {
         font-family: sans-serif;
-        background-color: #f4f1e9; /* Soft beige background */
-        color: #666666; /* Neutral gray text */
+        background-color: white;
+        color: black;
         margin: 0;
         padding: 0;
         line-height: 1.6;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
-        text-align: left;
-        background-color: #fff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-      }
-      th {
-        background-color: #7d9a6d; /* Primary green */
-        color: #ffffff;
-      }
-      tr:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-      tr:hover {
-        background-color: #f1f1f1;
-      }
-      button {
-        padding: 8px 12px;
-        background-color: #7d9a6d; /* Primary green */
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      }
-      button:hover {
-        background-color: #4a7b9d; /* Accent blue */
       }
 
       h1 {
         text-align: center;
         margin-top: 20px;
-        color: #7d9a6d; /* Primary green */
+        color: black;
       }
 
+      /* Modern Table Styling */
+      table {
+        width: 100%;
+        max-width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        font-size: 16px;
+        text-align: left;
+        background-color: #f9f9f9; /* Light gray table background */
+        border-radius: 12px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for modern look */
+      }
+
+      th, td {
+        padding: 14px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f1f1f1; /* Neutral gray background for the header */
+        color: black;
+        font-weight: bold;
+        text-transform: uppercase; /* Capitalized header text */
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px; /* Rounded top corners */
+      }
+
+      td {
+        background-color: white; /* White background for the table body cells */
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f3;
+      }
+
+      tr:hover {
+        background-color: #e1e1e1;
+      }
+
+      /* Button Styling */
+      button {
+        padding: 8px 14px;
+        background-color: #333; /* Dark gray background */
+        color: white;
+        border: 1px solid #ddd;
+        border-radius: 6px; /* Rounded edges */
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        margin: 5px;
+      }
+
+      button:hover {
+        background-color: #555; /* Lighter gray on hover */
+        border-color: #888;
+      }
+
+      button:active {
+        background-color: #444; /* Even darker on active click */
+      }
+
+      button:focus {
+        outline: none; /* Remove the default focus outline */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a subtle focus shadow */
+      }
+
+      /* Centered Button */
       .center-btn {
         display: flex;
         justify-content: center;
         margin-top: 20px;
       }
+
+      /* Header */
+      header {
+        background-color: #333;
+        color: white;
+        padding: 20px;
+      }
+
+      .left-align {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      nav {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      nav a {
+        margin-left: 20px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      nav a:hover {
+        color: #f1f1f1;
+      }
+
     </style>
   </head>
-  <header>
-    <div class="left-align">TURTLE SHELTER <br />PROJECT</div>
-    <nav class="right-align">
-      <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-        >HOME</a
-      >
-      <a href="https://turtleshelterproject.org/jensstory">JEN'S STORY</a>
-      <a href="https://turtleshelterproject.org/thank-you-to-our-sponsors"
-        >THANK YOU TO OUR SPONSORS</a
-      >
-      <a href="https://turtleshelterproject.org/about-homelessness-and-the-cold"
-        >ABOUT</a
-      >
-      <a href="https://turtleshelterproject.org/take-action"
-        >HOW YOU CAN HELP</a
-      >
-      <a href="/">VOLUNTEER</a>
-    </nav>
-  </header>
+
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <a href="/">Home</a>
+    <a href="/eventRequest">Request Event</a>
+    <a href="/newvolunteer">Volunteer</a>
+  </div>
+
   <body>
     <h1>Manage Contacts</h1>
 
@@ -108,13 +182,8 @@
           <td><%= contact.ContactPhone %></td>
           <td><%= contact.GroupName %></td>
           <td>
-            <form
-              action="/editContact/<%= contact.EventContactID %>"
-              method="get">
-              <input
-                type="hidden"
-                name="contactID"
-                value="<%= contact.EventContactID %>" />
+            <form action="/editContact/<%= contact.EventContactID %>" method="get">
+              <input type="hidden" name="contactID" value="<%= contact.EventContactID %>" />
               <button type="submit">Edit Contact</button>
             </form>
           </td>
