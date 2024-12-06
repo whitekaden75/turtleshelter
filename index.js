@@ -5,6 +5,7 @@ let path = require("path");
 
 let security = false;
 let sudoSecurity = false;
+let FirstName=""
 const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -32,8 +33,8 @@ app.get("/", (req, res) => res.render("index"));
 app.get("/jenstory", (req, res) => res.render("jenstory"));
 
 app.get("/adminhome", (req, res) => {
-  // Ensure the 'security' variable is being passed
-  res.render("adminhome", { sudoSecurity, security });
+  // Ensure the 'security', 'sudoSecurity', and 'FirstName' variables are passed
+  res.render("adminhome", { sudoSecurity, security, FirstName });
 });
 
 app.get("/login", (req, res) => res.render("login"));
@@ -52,21 +53,15 @@ app.post("/login", async (req, res) => {
     if (user && user.UserTypeID == 1) {
       sudoSecurity = true;
       security = false;
+      FirstName=user.FirstName
     } else if (user) {
       security = true;
       sudoSecurity = false;
+      FirstName=user.FirstName
     } else {
       sudoSecurity = false;
       security = false;
     }
-
-    res.redirect("/adminhome");
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
 // CONTACTS ------------
 app.get("/manageContacts", (req, res) => {
   knex("Contact")
