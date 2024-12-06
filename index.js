@@ -184,30 +184,32 @@ app.get("/newvolunteer", (req, res) => {
       res.status(500).send("Internal Server Error");
     });
 });
+
 // Route to handle adding a new volunteer
 app.post("/addvolunteer", (req, res) => {
   // Extract data from the form
-  const volFirstName = req.body.volFirstName || "";
-  const volLastName = req.body.volLastName || "";
-  const volEmail = req.body.volEmail || "";
-  const volPhone = req.body.volPhone || "";
-  const hoursAvailable = req.body.hoursAvailable;
+  const VolFirstName = req.body.VolFirstName || "";
+  const VolLastName = req.body.VolLastName || "";
+  const VolEmail = req.body.VolEmail || "";
+  const VolPhone = req.body.VolPhone || "";
+  const HoursAvailable = req.body.HoursAvailable;
   const SewingID = parseInt(req.body.SewingID, 10); // Selected sewing level ID
   const ReferralSourceID = parseInt(req.body.ReferralSourceID, 10); // Selected referral source ID
 
   // Insert the new volunteer into the 'volunteers' table
   knex("Volunteer")
     .insert({
-      VolFirstName: volFirstName.toUpperCase(),
-      VolLastName: volLastName.toUpperCase(),
-      VolEmail: volEmail,
-      VolPhone: volPhone,
-      HoursAvailable: hoursAvailable,
+      VolFirstName: VolFirstName.toUpperCase(),
+      VolLastName: VolLastName.toUpperCase(),
+      VolEmail: VolEmail,
+      VolPhone: VolPhone,
+      HoursAvailable: HoursAvailable,
       SewingID: SewingID, // Store the sewing level ID
       ReferralSourceID: ReferralSourceID, // Store the referral source ID
     })
     .then(() => {
       // Redirect to home page or another relevant page after successful insertion
+      successMessage: 'New Volunteer Sucessfully Created!',
       res.redirect("/");
     })
     .catch((error) => {
