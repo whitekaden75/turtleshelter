@@ -6,31 +6,68 @@
     <title>Review Event</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f4f1e9;
-            color: #666666;
+        body, html {
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            width: 100%;
+            height: 100%;
         }
+
+        /* Transparent Navigation Bar */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            height: 50px;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: lightgreen;
+        }
+
+        /* Form Styling */
         .middlepage {
-            max-width: 600px;
-            margin: 30px auto;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #f9f9f9;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        /* Title Styling to match the first form */
         h2 {
-            color: #7d9a6d;
+            color: black; /* Black color for the title */
+            font-size: 28px; /* Font size to match the first form */
+            font-weight: bold; /* Bold font */
             text-align: center;
+            margin-bottom: 20px; /* Space below the title */
+            border-bottom: 2px solid black; /* Black line under the title */
+            padding-bottom: 10px; /* Add some space between the title and the line */
         }
+
         label {
             display: block;
             margin-top: 15px;
             font-weight: bold;
         }
+
         input, select, button {
             width: 100%;
             padding: 10px;
@@ -38,21 +75,53 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+
         button {
-            background-color: #7d9a6d;
-            color: white;
-            font-size: 16px;
+            background-color: lightgreen;
+            color: black;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         button:hover {
-            background-color: #4a7b9d;
+            background-color: #89e589;
+            transform: scale(1.05);
         }
+
+        /* Footer */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        footer a {
+            color: lightgray;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .input-container {
+            margin-bottom: 15px;
+        }
+
+        .input-container input, .input-container select {
+            font-size: 14px;
+        }
+        
         .checkbox-group {
             display: flex;
             align-items: center;
             margin-top: 15px;
         }
+
         .checkbox-group input {
             width: auto;
             margin-right: 10px;
@@ -60,75 +129,112 @@
     </style>
 </head>
 <body>
+    <!-- Transparent Navigation Bar -->
+    <div class="nav-bar">
+        <a href="/">Home</a>
+        <a href="/eventRequest">Request Event</a>
+        <a href="/newvolunteer">Volunteer</a>
+        <a href="/viewEventRequests">View Event Requests</a>
+    </div>
+
     <main>
         <form action="/reviewRequest" method="POST" class="middlepage">
             <h2>Review Event</h2>
-        
-            <!-- Display Proposed Dates -->
-            <label>Proposed Date 1:</label>
-            <p><%= request.EventDate1 %></p>
-        
-            <label>Proposed Date 2:</label>
-            <p><%= request.EventDate2 %></p>
-        
-            <label>Proposed Date 3:</label>
-            <p><%= request.EventDate3 %></p>
-        
-            <!-- New Field to Select Final Event Date -->
-            <label for="finalEventDate">Select Final Event Date:</label>
-            <input type="date" id="finalEventDate" name="finalEventDate" required />
-        
-            <!-- Start Time and Duration -->
-            <label for="startTime">Start Time:</label>
-            <input type="time" id="startTime" name="startTime" value="<%= request.StartTime %>" required />
-        
-            <label for="duration">Duration (hours):</label>
-            <input type="number" id="duration" name="duration" value="<%= request.Duration %>" min="1" required />
-        
-            <!-- Address, City, State -->
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" value="<%= request.EventAddress %>" required />
-        
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" value="<%= request.EventCity %>" required />
-        
-            <label for="state">State:</label>
-            <input type="text" id="state" name="state" value="<%= request.EventState %>" required />
-        
-            <!-- Contact Information -->
-            <label for="firstName">Preferred Contact First Name:</label>
-            <input type="text" id="firstName" name="firstName" value="<%= request.ContactFirstName %>" required />
-        
-            <label for="lastName">Preferred Contact Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value="<%= request.ContactLastName %>" required />
-            
-            <label for="contactEmail">Preferred Contact Email:</label>
-            <input type="text" id="contactEmail" name="contactEmail" value="<%= request.ContactEmail %>" required />
-            
-            <label for="groupName">Group Name:</label>
-            <input type="text" id="groupName" name="groupName" value=" <%= request.GroupName %> " required />
-            
 
-            <label for="phoneNumber">Preferred Contact Phone Number:</label>
-            <input
-                type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                value="<%= request.ContactPhone %>"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                placeholder="123-456-7890"
-                required />
-        
+            <!-- Display Proposed Dates -->
+            <div class="input-container">
+                <label>Proposed Date 1:</label>
+                <p><%= request.EventDate1 %></p>
+            </div>
+
+            <div class="input-container">
+                <label>Proposed Date 2:</label>
+                <p><%= request.EventDate2 %></p>
+            </div>
+
+            <div class="input-container">
+                <label>Proposed Date 3:</label>
+                <p><%= request.EventDate3 %></p>
+            </div>
+
+            <!-- New Field to Select Final Event Date -->
+            <div class="input-container">
+                <label for="finalEventDate">Select Final Event Date:</label>
+                <input type="date" id="finalEventDate" name="finalEventDate" required />
+            </div>
+
+            <!-- Start Time and Duration -->
+            <div class="input-container">
+                <label for="startTime">Start Time:</label>
+                <input type="time" id="startTime" name="startTime" value="<%= request.StartTime %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="duration">Duration (hours):</label>
+                <input type="number" id="duration" name="duration" value="<%= request.Duration %>" min="1" required />
+            </div>
+
+            <!-- Address, City, State -->
+            <div class="input-container">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" value="<%= request.EventAddress %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="<%= request.EventCity %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" value="<%= request.EventState %>" required />
+            </div>
+
+            <!-- Contact Information -->
+            <div class="input-container">
+                <label for="firstName">Preferred Contact First Name:</label>
+                <input type="text" id="firstName" name="firstName" value="<%= request.ContactFirstName %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="lastName">Preferred Contact Last Name:</label>
+                <input type="text" id="lastName" name="lastName" value="<%= request.ContactLastName %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="contactEmail">Preferred Contact Email:</label>
+                <input type="text" id="contactEmail" name="contactEmail" value="<%= request.ContactEmail %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="groupName">Group Name:</label>
+                <input type="text" id="groupName" name="groupName" value="<%= request.GroupName %>" required />
+            </div>
+
+            <div class="input-container">
+                <label for="phoneNumber">Preferred Contact Phone Number:</label>
+                <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value="<%= request.ContactPhone %>"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    placeholder="123-456-7890"
+                    required />
+            </div>
+
             <!-- Event Type -->
-            <label for="TypeID">Event Type:</label>
-            <select id="TypeID" name="TypeID" required>
-                <% type.forEach(eventType => { %>
-                    <option value="<%= eventType.TypeID %>" <%= request.EventType === eventType.EventType ? 'selected' : '' %>>
-                        <%= eventType.EventType %>
-                    </option>
-                <% }); %>
-            </select>
-        
+            <div class="input-container">
+                <label for="TypeID">Event Type:</label>
+                <select id="TypeID" name="TypeID" required>
+                    <% type.forEach(eventType => { %>
+                        <option value="<%= eventType.TypeID %>" <%= request.EventType === eventType.EventType ? 'selected' : '' %> >
+                            <%= eventType.EventType %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+
             <!-- Share Jen's Story -->
             <div class="checkbox-group">
                 <input
@@ -139,37 +245,45 @@
                     <%= request.JenStory ? 'checked' : '' %> />
                 <label for="shareStory">Would you like Jen to share her story?</label>
             </div>
-        
+
             <!-- Participants -->
-            <label for="participants">Estimated Number of Participants:</label>
-            <input
-                type="number"
-                id="participants"
-                name="participants"
-                value="<%= request.ExpectedParticipants %>"
-                min="1"
-                required />
-        
+            <div class="input-container">
+                <label for="participants">Estimated Number of Participants:</label>
+                <input
+                    type="number"
+                    id="participants"
+                    name="participants"
+                    value="<%= request.Participants %>"
+                    min="1"
+                    required />
+            </div>
+
             <!-- New hidden field for StatusID -->
             <input type="hidden" name="StatusID" value="2" />
 
             <!-- New hidden field for EventID -->
-            <input type="hidden" name="EventID" value=" <%= request.EventID %>" />
+            <input type="hidden" name="EventID" value="<%= request.EventID %>" />
 
             <!-- New field for Team Members Needed -->
-            <label for="TmNeeded">Team Members Needed:</label>
-            <input
-                type="number"
-                id="TmNeeded"
-                name="TmNeeded"
-                value=""
-                min="1"
-                required />
-        
+            <div class="input-container">
+                <label for="TmNeeded">Team Members Needed:</label>
+                <input
+                    type="number"
+                    id="TmNeeded"
+                    name="TmNeeded"
+                    value=""
+                    min="1"
+                    required />
+            </div>
+
             <!-- Submit Button -->
             <button type="submit">Submit</button>
         </form>
-        
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Event Planner. All rights reserved.</p>
+    </footer>
 </body>
 </html>
